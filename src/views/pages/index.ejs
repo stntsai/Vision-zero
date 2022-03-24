@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('../partials/head') %>
+    <!-- Include any custom css classes that you want available on this page here -->
+    <style>
+
+    </style>
+</head>
+
+<body>
+  <header>
+    <%- include('../partials/nav') %>
+  </header>
+  <!-- CS5356 TODO #1 Add your landing page here -->
+  <div class="container">
+    <div class="columns">
+      <div class="column is-half">
+        <div class="card">
+          <div class="card-image">
+            <figure class="image">
+              <img src="https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="Placeholder image">
+            </figure>
+          </div>
+        </div>
+      </div>
+    
+      <div class="column ">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div class="content">
+          <h1>Welcome to Ruffhouse!</h1>
+          <ul>
+            <h2>
+              <li>Product overview</li>
+            </h2>
+              <h4>
+                <p>This is a website that allows for people to share a constant stream of dog pictures.</p>
+              </h4>
+            <h2>
+              <li>Feature sets</li>
+            </h2>
+              <h4>
+                <ul>
+                  <li>Users are allowed to sign-up for free. Only those who signed-in can use the following feature. </li>
+                  <li>Only signed-in users are allowed to view the stream posts of dogs, and post their content with a random dog picture attached.</li>
+                </ul>
+              </h4>
+            <h2>
+              <li>How to sign up</li>
+            </h2>
+              <h4>
+                <p>If you haven't already signed up, click the below button</p>
+              </h4>
+              <a class="button is-link is-large" href="/sign-up">Sign-up for free!</a>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+
+<%- include('../partials/footer') %>
+
+</html>
