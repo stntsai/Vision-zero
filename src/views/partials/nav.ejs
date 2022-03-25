@@ -1,10 +1,11 @@
-<nav class="navbar" rolw="navigation" aria-label="main navigation">
-  <div class="container">
+<nav class="navbar" rolw="navigation" aria-label="main navigation" style="background-color: #7BB6D9; opacity:0.8">
+  <div class="container" >
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
-        <figure class="image">
-          <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png" alt="Logo">
-        </figure>
+        <!-- <figure class="image is-3by1">
+          <img src="../../../static/logo-black.png" alt="Logo">
+        </figure> -->
+        <h1 class="title" style="color: #FFFFFF; font-weight:bold">VISION ZERO</h1>
       </a>
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
         <span aria-hidden="true"></span>
@@ -15,18 +16,28 @@
     <% if(locals.email) { %>
       <div id="navbarMenu" class="navbar-menu">
         <div class="navbar-end">
-          <a href="/dashboard" class="navbar-item">
+          <a href="/planner" class="navbar-item">
             <%= email %>
               <i class="material-icons">person_outline</i>
           </a>
         </div>
       </div>
-      <% } else if(locals.hideSignIn) { %>
       <% } else { %>
         <div id="navbarMenu" class="navbar-menu">
           <div class="navbar-end">
             <div class="navbar-item">
-              <a href="/sign-in" class="button is-primary">Sign In
+              <a href="/sign-in" >
+                <h5 style="color: #E5E5E5">ABOUT</h5>
+              </a>
+            </div>
+            <div class="navbar-item">
+              <a href="/sign-in" >
+                <h2 style="color: #E5E5E5">ROUTE PLANNER</h2>
+              </a>
+            </div>
+            <div class="navbar-item">
+              <a href="/sign-in" >
+                <h2 style="color: #FFFFFF; font-weight: bold">LOGIN</h2>
               </a>
             </div>
           </div>

@@ -47,17 +47,12 @@ app.get("/sign-up", function (req, res) {
   res.render("pages/sign-up");
 });
 
-app.get("/dashboard", authMiddleware, async function (req, res) {
+app.get("/planner", authMiddleware, async function (req, res) {
   const feed = await userFeed.get();
-  res.render("pages/dashboard", { user: req.user, feed });
+  res.render("pages/planner", { user: req.user, feed });
 });
 
 app.post("/sessionLogin", async (req, res) => {
-  // CS5356 TODO #4
-  // Get the ID token from the request body
-  // Create a session cookie using the Firebase Admin SDK
-  // Set that cookie with the name 'session'
-  // And then return a 200 status code instead of a 501
   const idToken = req.body.idToken.toString();
 
   // Set session expiration to 5 days.
@@ -101,7 +96,7 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
     .then(()=>{
       userFeed.get()
         .then((feed)=>{
-        res.render("pages/dashboard", {user: user, feed});
+        res.render("pages/planner", {user: user, feed});
       })
     });
 });
