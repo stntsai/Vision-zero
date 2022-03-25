@@ -6,28 +6,62 @@
 </head>
 
 <body style="height:100%">
-  <div style="height: 100%;
-              background-image: url('../../../static/login-background.jpg'); 
-              background-size: cover;
-              ">
+  <div id='login-bg' style="height: 100%;
+                            background-image: url('../../../static/login-background.jpg'); 
+                            background-size: cover;
+                            ">
     <header>
       <%- include('../partials/nav') %>
     </header>
+      <div id="login-box" style="background-color: #e5e5e5; 
+                                opacity: 90%;
+                                height: 50%;
+                                width: 25%;
+                                position: relative;
+                                top:20%;
+                                left:37.5%;
+                                ">
+        <div style="height:80%;
+                    width: 80%;
+                    position: relative;
+                    top:10%;
+                    left: 10%">
+          <h1 class="title is-4">LOGIN</h1>
+          <div>
+            <form id="login-form" method="POST">
 
-    <form id="login-form" method="POST">
-      <label for="email">Email</label>
-      <input required type="text" name="email" placeholder="Your user name" />
-      
-      <label for="password">Password</label>
-      <input required type="password" name="password" id="password" />
-      <button>
-        LOGIN
-      </button>
-      <div id="login-error">
+              <div>
+                <input required type="text" name="email" placeholder="Email" class="input"/>
+              </div>
+              <div style="margin-top: 1em; margin-bottom: 2em">
+                <input required type="password" name="password" id="password" placeholder="Password" class="input"/>
+              </div>
+              <button class="button" style="background-color: #7BB6D9; 
+                                            width:100%;
+                                            color: #FFFFFF">
+                Log In
+              </button>
+              <div id="login-error">
+    
+              </div>
+              <div style="margin-top: 1em; margin-bottom:2em; font-size: 13px; ">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  Remember me
+                </label>
+              </div>
 
+              <div style="text-align: center">
+                <p>
+                  New to Vision Zero? 
+                  <a href="/sign-up" style="color: #3F8ABE;">Sign up now</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+        
       </div>
-      </div>
-    </form>
   </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
