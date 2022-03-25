@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height:100%">
 
 <head>
   <%- include('../partials/head') %>
 </head>
 
-<body style="background-image: url('../../../static/login-background.jpg');">
+<body style="height:100%">
+  <div style="height: 100%;
+              background-image: url('../../../static/login-background.jpg'); 
+              background-size: cover;
+              ">
     <header>
-      <%- include('../partials/nav', { hideSignIn: true }) %>
+      <%- include('../partials/nav') %>
     </header>
 
     <form id="login-form" method="POST">
@@ -17,13 +21,14 @@
       <label for="password">Password</label>
       <input required type="password" name="password" id="password" />
       <button>
-        Sign In
+        LOGIN
       </button>
       <div id="login-error">
 
       </div>
       </div>
     </form>
+  </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
