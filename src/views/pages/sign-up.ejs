@@ -1,18 +1,17 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height:100%">
 
 <head>
   <%- include('../partials/head') %>
-  
 </head>
 
-<body>
-  <header>
+<body style="height:100%">
+  <!-- <header>
     <%- include('../partials/nav') %>
-  </header>
+  </header> -->
 
-  <div class="container">
+  <!-- <div class="container">
     Sign Up for a new account or <a href="/sign-in">click here to sign in with an existing account</a>
     <form id="login-form">
       <label>Email</label>
@@ -24,6 +23,55 @@
     <div id="login-error" style="display: none;">
     </div>
     <a href="/planner">Route Planner</a>
+  </div> -->
+  <div  style="height: 100%;">
+    <header>
+      <%- include('../partials/nav') %>
+    </header>
+      <div id="signup-box" style="
+                                height: 50%;
+                                width: 34%;
+                                position: relative;
+                                top:10%;
+                                left:33%;
+                                ">
+        <div style="height:80%;
+                    width: 80%;
+                    position: relative;
+                    top:10%;
+                    left: 10%">
+          <h1 class="title ">Create an user account just by your email and a password</h1>
+          <h3 class=" is-6"> We don't need anything else to verify. </h3>
+          <h3 class=" is-6"> We hate paperwork, too. </h3>
+          
+          <div style="margin-top: 1em;">
+            <form id="signup-form" method="POST">
+              <div >
+                <input required type="text" name="email" placeholder="Email" class="input" style="border-color: #7BB6D9;"/>
+              </div>
+              <div style="margin-top: 1em; margin-bottom: 2em">
+                <input required type="password" name="password" placeholder="Password" class="input" style="border-color: #7BB6D9;"/>
+              </div>
+              <button class="button" style="background-color: #3F8ABE; 
+                                            width:100%;
+                                            color: #FFFFFF">
+                Create account
+              </button>
+              <div id="signup-error">
+    
+              </div>
+
+              <div style="text-align: center; margin-top:2em">
+                <p>
+                  Already have an account? 
+                  <a href="/sign-in" style="color: #3F8ABE;">Click to log in</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+        
+      </div>
   </div>
 </body>
 
