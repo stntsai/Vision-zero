@@ -3,18 +3,14 @@ const path = require("path");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const admin = require("firebase-admin");
+const functions = require("firebase-functions");
 const app = express();
 const port = process.env.PORT || 8080;
 
-// CS5356 TODO #2
-// Uncomment this next line after you've created
-// serviceAccountKey.json
 const serviceAccount = require("../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 
-// CS5356 TODO #2
-// Uncomment this next block after you've created serviceAccountKey.json
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
@@ -86,10 +82,6 @@ app.get("/sessionLogout", (req, res) => {
 });
 
 app.post("/dog-messages", authMiddleware, async (req, res) => {
-  // CS5356 TODO #5
-  // Get the message that was submitted from the request body
-  // Get the user object from the request body
-  // Add the message to the userFeed so its associated with the user
   const message = req.body.message;
   const user = req.user;
   userFeed.add(user, message)
@@ -103,3 +95,5 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
 
 app.listen(port);
 console.log("Server started at http://localhost:" + port);
+
+exports.app = functions.https.onRequest(app);

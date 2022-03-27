@@ -1,10 +1,11 @@
 {
-  "name": "2022-cs-5356-milestone-1",
+  "name": "vision-zero",
   "version": "1.0.0",
   "description": "Refer to the assignment for most of the details of the project",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon src/index.js",
+    "build": "src/index.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,9 +14,10 @@
     "bulma": "^0.9.3",
     "casual": "^1.6.2",
     "cookie-parser": "^1.4.6",
-    "express": "^4.17.2",
+    "express": "^4.17.3",
     "firebase": "^9.6.6",
-    "firebase-admin": "^10.0.2"
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.19.0"
   },
   "devDependencies": {
     "cypress": "^9.3.1",
