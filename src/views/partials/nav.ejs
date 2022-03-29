@@ -10,35 +10,32 @@
         <span aria-hidden="true"></span>
       </a>
     </div>
-    <% if(locals.email) { %>
-      <div id="navbarMenu" class="navbar-menu">
-        <div class="navbar-end">
-          <a href="/planner" class="navbar-item">
-            <%= email %>
-              <i class="material-icons">person_outline</i>
-          </a>
-        </div>
-      </div>
-      <% } else { %>
         <div id="navbarMenu" class="navbar-menu">
           <div class="navbar-end">
             <div class="navbar-item">
-              <a href="/sign-in" >
-                <h5 style="color: #E5E5E5">ABOUT</h5>
+              <a href="/" >
+                <h5 style="color: #FFFFFF">ABOUT</h5>
               </a>
             </div>
             <div class="navbar-item">
               <a href="/sign-in" >
-                <h2 style="color: #E5E5E5">ROUTE PLANNER</h2>
+                <h2 style="color: #FFFFFF">ROUTE PLANNER</h2>
               </a>
             </div>
-            <div class="navbar-item">
-              <a href="/sign-in" >
-                <h2 style="color: #FFFFFF; font-weight: bold">LOGIN</h2>
-              </a>
-            </div>
+            <% if(locals.email) { %>
+              <div class="navbar-item">
+                <a href="/planner" >
+                  <h2 style="color: #FFFFFF"><%= email %></h2>
+                </a>
+              </div>
+            <% } else { %>
+              <div class="navbar-item">
+                <a href="/sign-in" >
+                  <h2 style="color: #FFFFFF; font-weight: 900">LOGIN</h2>
+                </a>
+              </div>
+            <% }%>
           </div>
         </div>
-      <% }%>
   </div>
 </nav>

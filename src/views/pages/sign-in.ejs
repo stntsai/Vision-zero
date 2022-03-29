@@ -1,29 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height:100%">
 
 <head>
   <%- include('../partials/head') %>
 </head>
 
-<body style="background-image: url('../../../static/login-background.jpg');">
+<body style="height:100%">
+  <div id='login-bg' style="height: 100%;
+                            background-image: url('/login-background.jpg'); 
+                            background-size: cover;
+                            ">
     <header>
-      <%- include('../partials/nav', { hideSignIn: true }) %>
+      <%- include('../partials/nav') %>
     </header>
+      <div id="login-box" style="background-color: #e5e5e5; 
+                                opacity: 90%;
+                                height: 50%;
+                                width: 25%;
+                                position: relative;
+                                top:20%;
+                                left:37.5%;
+                                ">
+        <div style="height:80%;
+                    width: 80%;
+                    position: relative;
+                    top:10%;
+                    left: 10%">
+          <h1 class="title is-4">LOGIN</h1>
+          <div>
+            <form id="login-form" method="POST">
 
-    <form id="login-form" method="POST">
-      <label for="email">Email</label>
-      <input required type="text" name="email" placeholder="Your user name" />
-      
-      <label for="password">Password</label>
-      <input required type="password" name="password" id="password" />
-      <button>
-        Sign In
-      </button>
-      <div id="login-error">
+              <div>
+                <input required type="text" name="email" placeholder="Email" class="input"/>
+              </div>
+              <div style="margin-top: 1em; margin-bottom: 2em">
+                <input required type="password" name="password" id="password" placeholder="Password" class="input"/>
+              </div>
+              <button class="button" style="background-color: #3F8ABE; 
+                                            width:100%;
+                                            color: #FFFFFF">
+                Log In
+              </button>
+              <div id="login-error">
+    
+              </div>
+              <div style="margin-top: 1em; margin-bottom:2em; font-size: 13px; ">
+                <label class="checkbox">
+                  <input type="checkbox">
+                  Remember me
+                </label>
+              </div>
 
+              <div style="text-align: center">
+                <p>
+                  New to Vision Zero? 
+                  <a href="/sign-up" style="color: #3F8ABE;">Sign up now</a>
+                </p>
+              </div>
+            </form>
+          </div>
+        </div>
+        
       </div>
-      </div>
-    </form>
+  </div>
 </body>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
@@ -32,13 +71,13 @@
 
   window.onload = () => {
     const firebaseConfig = {
-      apiKey: "AIzaSyDJth8yhQoC1d6plkrszCnmO0KVNJqEx-I",
-      authDomain: "bss-milestone1.firebaseapp.com",
-      projectId: "bss-milestone1",
-      storageBucket: "bss-milestone1.appspot.com",
-      messagingSenderId: "83210385629",
-      appId: "1:83210385629:web:084424fb24f11995be0334",
-      measurementId: "G-55PCHCTT5J"
+      apiKey: "AIzaSyDNk1ZiVcjRiLtD3Xx6qtHk4ZGsb0awdlE",
+      authDomain: "vision-zero-606ac.firebaseapp.com",
+      projectId: "vision-zero-606ac",
+      storageBucket: "vision-zero-606ac.appspot.com",
+      messagingSenderId: "99095937222",
+      appId: "1:99095937222:web:8b1d6fb82e5a3b666897c7",
+      measurementId: "G-9XSR46T84R"
     };
 
     const app = firebase.initializeApp(firebaseConfig);
