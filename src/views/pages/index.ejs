@@ -13,56 +13,101 @@
   <header>
     <%- include('../partials/nav') %>
   </header>
-  <!-- CS5356 TODO #1 Add your landing page here -->
-  <div class="container">
-    <div class="columns">
-      <div class="column is-half">
-        <div class="card">
-          <div class="card-image">
-            <figure class="image">
-              <img src="https://images.unsplash.com/photo-1541364983171-a8ba01e95cfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80" alt="Placeholder image">
+
+
+ 
+  <section class="'hero-main hero" style="background-color:#EEF2FF;">
+    <div class="hero-body">
+      <div class="'container">
+        <div class="columns">
+          <div class="column is-half">
+            <div style="position: relative; top:15%; left:25%">
+              <h1 class="title is-size-1 "> Safe </h1>
+              <h1 class="title is-size-1 "> Traveling</h1>
+              <h1 class="title is-size-1"> Start Now</h1>
+
+              <div class="field is-grouped">
+                <div class="buttons">
+                  <button class="button button-white is-large is-outlined is-success is-rounded is-light" sytle="background-color: #0a0a23;"href="/sign-in"> Login</button>
+                  <button class="button button-white is-large is-dangerous is-rounded" href="/sign-up"> Sign Up</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-half">
+            <figure class="image is-4by3">
+              <img src="./public/main_page_map.png" style="width: 800px; height:auto; border: 2px solid #ddd;" class="rounded-corners">
             </figure>
           </div>
         </div>
       </div>
-    
-      <div class="column ">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <div class="content">
-          <h1>Welcome to Ruffhouse!</h1>
-          <ul>
-            <h2>
-              <li>Product overview</li>
-            </h2>
-              <h4>
-                <p>This is a website that allows for people to share a constant stream of dog pictures.</p>
-              </h4>
-            <h2>
-              <li>Feature sets</li>
-            </h2>
-              <h4>
-                <ul>
-                  <li>Users are allowed to sign-up for free. Only those who signed-in can use the following feature. </li>
-                  <li>Only signed-in users are allowed to view the stream posts of dogs, and post their content with a random dog picture attached.</li>
-                </ul>
-              </h4>
-            <h2>
-              <li>How to sign up</li>
-            </h2>
-              <h4>
-                <p>If you haven't already signed up, click the below button</p>
-              </h4>
-              <a class="button is-link is-large" href="/sign-up">Sign-up for free!</a>
-          </ul>
-          
+    </div>
+  </section>
+
+
+  <section class="section is-medium">
+    <div class="columns is-variable is-8">
+      <div class="column is-full-height">
+        <div class="card" style="background-color:#F7F7F7" >
+          <p class="card-header-icon">
+            <figure class="image is 12x12" style="position: relative; left:10%">
+              <img src="./public/car-icon.png" style="width: 75px; height:auto;">
+            </figure>
+          </p>
+      
+          <div class="card-content">
+            <h1 class="title is-size-5">
+              Daily Safe Travel Tips
+            </h1>
+            <div class="block"></div>
+            <p class="subtitle" style="color:#858482">
+              > 50% of accident-caused pedestrians' injuries happens in intersections
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card is-full-height" style="background-color:#F7F7F7" >
+          <p class="card-header-icon">
+            <figure class="image is 12x12" style="position: relative; left:10%">
+              <img src="./public/chat_icon.png" style="width: 75px; height:auto;">
+            </figure>
+          </p>
+      
+          <div class="card-content">
+            <h1 class="title is-size-5">
+              Latest News
+            </h1>
+            <div class="block"></div>
+            <p class="subtitle" style="color:#858482">
+              Mayor Adams Urge Albany to Pass Local Control for Traffic Saftey.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card is-full-height" style="background-color:#F7F7F7" >
+          <p class="card-header-icon">
+            <figure class="image is 12x12" style="position: relative; left:10%">
+              <img src="./public/location_icon.png" style="width: 75px; height:auto;">
+            </figure>
+          </p>
+      
+          <div class="card-content">
+            <h1 class="title is-size-5">
+              About Vision Zero
+            </h1>
+            <div class="block"></div>
+            <p class="subtitle" style="color:#858482">
+              In the City of New York, we recognize that deaths and serious injuries in traffic are not inevitable "accidents," but preventable crashes that can be ended through engineering, enforcement, and education.
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </body>
 
 
