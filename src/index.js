@@ -93,7 +93,8 @@ app.post("/dog-messages", authMiddleware, async (req, res) => {
     });
 });
 
-app.listen(port);
-console.log("Server started at http://localhost:" + port);
+// app.listen(port);
+// console.log("Server started at http://localhost:" + port);
+
 
 exports.app = functions.https.onRequest(app);

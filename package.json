@@ -2,10 +2,9 @@
   "name": "vision-zero",
   "version": "1.0.0",
   "description": "Refer to the assignment for most of the details of the project",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
-    "build": "src/index.js"
+    "start": "nodemon src/index.js"
   },
   "author": "",
   "license": "ISC",

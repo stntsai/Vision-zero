@@ -11,8 +11,9 @@
       "function": "app"
     } ]
   },
-  "functions": {
-    "source": "functions"
+  "functions": { 
+    "source": "./", 
+    "runtime": "nodejs16" 
   }
 
 }
