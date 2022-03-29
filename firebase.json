@@ -1,19 +1,18 @@
-{
-  "hosting": {
-    "public": "src",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [ {
-      "source": "**",
-      "function": "app"
-    } ]
-  },
+{ 
   "functions": { 
     "source": "./", 
     "runtime": "nodejs16" 
-  }
-
+  }, 
+  "hosting": { 
+    "public": "public", 
+    "ignore": [ 
+      "firebase.json", 
+      "**/.*", 
+      "**/node_modules/**" 
+    ], 
+    "rewrites": [{ 
+      "source": "**", 
+      "function": "app" 
+    }] 
+  } 
 }
