@@ -27,7 +27,7 @@ app.use(
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// app.use("/static", express.static("static/"));
+app.use("/static", express.static("static/"));
 
 // use res.render to load up an ejs view file
 // index page
