@@ -48,6 +48,11 @@ app.get("/planner", authMiddleware, async function (req, res) {
   res.render("pages/planner", { user: req.user, feed });
 });
 
+app.get("/route", authMiddleware, async function (req, res) {
+  const feed = await userFeed.get();
+  res.render("pages/route", { user: req.user, feed });
+});
+
 app.post("/sessionLogin", async (req, res) => {
   const idToken = req.body.idToken.toString();
 
