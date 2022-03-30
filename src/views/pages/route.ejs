@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+
+<head>
+  <%- include('../partials/head') %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+
+<body style="height:100%; background-color: #EEF2FF;">
+    <header>
+        <%- include('../partials/nav', { email: user.email }) %>
+    </header>
+
+        <!-- <h4 style="color: #635E5E"><b>FROM:</b> Cornell Tech</h4> -->
+
+    <div class="control" style="left: 16%;top: 2%; color: #635E5E;">
+        <label class="radio">
+            <input type="radio" name="rsvp" style="margin-right: 8px;" checked>
+                Driving
+        </label>
+        <label class="radio">
+            <input type="radio" name="rsvp" style="margin-right: 8px;">
+                Bicycling
+        </label>
+        <label class="radio">
+            <input type="radio" name="rsvp" style="margin-right: 8px;">
+                Transit
+        </label>
+        <label class="radio">
+            <input type="radio" name="rsvp" style="margin-right: 8px;">
+                Walking
+        </label>
+    </div>
+
+    <div id="search-box" style="background-color: #DDDDDD; 
+                                opacity: 90%;
+                                height: 60px;
+                                width: 60%;
+                                position: relative;
+                                top:3%;
+                                left:16%;">
+
+        <input class="input" 
+                required type="text" 
+                name="start-point"  
+                placeholder="Cornell Tech" 
+                style="background-color: #DDDDDD; 
+                        opacity: 90%; 
+                        width: 45%; 
+                        height: 60px;
+                        margin-left: 5px;
+                        margin-right: 10px;" 
+                type="text">
+
+        <i class="fas fa-arrow-right fas fa-2x" style="padding-top: 15px; 
+                                                        color: #7BB6D9;
+                                                        margin-left: 10px;"></i>
+
+
+        <input class="input" 
+                required type="text" 
+                name="destination"  
+                placeholder="Central Park" 
+                style="background-color: #DDDDDD; 
+                        opacity: 90%; 
+                        width: 45%; 
+                        height: 60px;
+                        margin-left: 20px;
+                        position: relative;" 
+                type="text">
+        <a href="/sign-in" >
+        <a href="/route" class="button is-light" style="top:-85%; 
+                            background-color: #3F8ABE; 
+                            color: #FFFFFF; 
+                            text-align: center; 
+                            position: relative;
+                            left: 101%">
+            Search
+        </a>
+    </div>
+
+    <!-- <div style="position: relative; margin-left: 14%; margin-top: 3%; margin-bottom: 1%;"> -->
+
+        <img src="./../../../static/route-planner.png" alt="Route planner" width="1100" height="580" style="display: block;
+    margin-left: auto; margin-right: auto; text-align: center; margin-top: 2%;">
+
+    <!-- </div> -->
+ 
+    <!-- <div id='planner-bg' style="height: 100%;
+                          background-image: url('../../../static/planner-background.png'); 
+                          background-size: cover">
+    </div> -->
+
+</body>
+
+<%- include('../partials/footer') %>
+
+</html>
