@@ -44,17 +44,15 @@ app.get("/sign-up", function (req, res) {
 });
 
 app.get("/planner", authMiddleware, async function (req, res) {
-  // const feed = await userFeed.get();
   res.render("pages/planner", { user: req.user });
 });
 
 app.get("/route", authMiddleware, async function (req, res) {
-  // const feed = await userFeed.get();
   res.render("pages/route", { user: req.user });
 });
 
-app.get("/membership", async function (req, res) {
-  res.render("pages/membership", { user: req.user});
+app.get("/subscribe", async function (req, res) {
+  res.render("pages/subscribe", { user: req.user});
 });
 
 app.post("/sessionLogin", async (req, res) => {

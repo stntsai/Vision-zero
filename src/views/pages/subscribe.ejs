@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+
+<head>
+  <%- include('../partials/head') %>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+</head>
+
+<body style="height:100%">
+  <div id='subscribe-bg' style="height: 100%;
+                                background-color: #ffffff">
+  <header>
+    <%- include('../partials/nav') %>
+  </header>
+
+
+  <div id="pricing-table" style="height: 80%;
+                                  width: 90%;
+                                  position: relative;
+                                  top:5%;
+                                  left:5%;">
+    <div style="height:10%;
+                position: relative;
+                top:5%;
+                text-align: center;">
+      <h1 class="title is-3" style="color: #27445a">
+        Our pricing table
+      </h1>
+      <p class="subtitle is-6" style="color: #27445a"> Join Vision Zero membership to explore more means for road safety! </p>
+    </div>
+    
+    <div class="columns is-8" style="height:70%;
+                                          position: relative;
+                                          top:15%;">
+      <div id="basic" class="column" style="background-color: #f1f3f5;
+                                            text-align: center;
+                                            margin: 2em;
+                                            ">
+        <div style="height: 75%; margin-top: 1em">
+          <h1 class="title is-7">Basic</h1>
+          <h1 class="title is-4">Free</h1>
+          <ul>
+            <li>feature 1</li>
+            <li>feature 2</li>
+          </ul>
+        </div>
+
+        <button class="button" style="background-color: #707478; 
+                                            width:70%;
+                                            color: #FFFFFF">
+          Sign up to unlock
+        </button>
+      </div>
+      <div id="premium" class="column" style="
+                                            text-align: center;
+                                            border: 1px solid #707478;
+                                            box-shadow: 10px 10px  #dadfe2;
+                                            ">
+        <div style="height: 70%; margin-top: 1em">
+          <h1 class="title is-7">Premium</h1>
+          <h1 class="title is-4">$35   /year </h1>
+          <ul>
+            <li>feature 1</li>
+            <li>feature 2</li>
+            <li>feature 3</li>
+            <li>feature 4</li>
+          </ul>
+        </div>
+        <button class="button" style="background-color: #3F8ABE; 
+                                            width:70%;
+                                            color: #FFFFFF">
+                Subscribe
+        </button>
+      </div>
+      <div id="deluxe" class="column" style="background-color: #f1f3f5;
+                                            text-align: center;
+                                            margin: 2em;
+                                            ">
+        <div style="height: 75%; margin-top: 1em">
+          <h1 class="title is-7">Deluxe</h1>
+          <h1 class="title is-4" >$49 /year </h1>
+          <ul>
+            <li>feature 1</li>
+            <li>feature 2</li>
+            <li>feature 3</li>
+            <li>feature 4</li>
+            <li>feature 5</li>
+          </ul>
+        </div>
+
+        <button class="button" style="background-color: #0d324c; 
+                                            width:70%;
+                                            color: #FFFFFF">
+                Subscribe
+        </button>
+      </div>
+    </div>
+
+  </div>
+</body>
+
+<%- include('../partials/footer') %>
+</html>
