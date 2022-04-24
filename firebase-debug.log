@@ -2337,3 +2337,64 @@ Issues? Report them at https://github.com/firebase/firebase-tools/issues and att
 [debug] [2022-04-24T02:12:09.419Z] [worker-us-central1-app-98c455ed-8851-4a3b-a108-3512bcb13279]: FINISHING {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-98c455ed-8851-4a3b-a108-3512bcb13279]: FINISHING"}}
 [debug] [2022-04-24T02:12:09.419Z] [worker-pool] Shutting down IDLE worker (us-central1-app) {"metadata":{"emulator":{"name":"functions"},"message":"[worker-pool] Shutting down IDLE worker (us-central1-app)"}}
 [debug] [2022-04-24T02:12:09.419Z] [worker-us-central1-app-c597a00e-286e-4c8d-a489-5ae221815f79]: FINISHING {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-c597a00e-286e-4c8d-a489-5ae221815f79]: FINISHING"}}
+[debug] [2022-04-24T02:12:09.438Z] Validating nodejs source
+[warn] ⚠  functions: package.json indicates an outdated version of firebase-functions. Please upgrade using npm install --save firebase-functions@latest in your functions directory. 
+[debug] [2022-04-24T02:12:11.276Z] > [functions] package.json contents: {
+  "name": "vision-zero",
+  "version": "1.0.0",
+  "description": "Refer to the assignment for most of the details of the project",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "bulma": "^0.9.3",
+    "casual": "^1.6.2",
+    "cookie-parser": "^1.4.6",
+    "ejs": "^3.1.6",
+    "express": "^4.17.3",
+    "firebase": "^9.6.6",
+    "firebase-admin": "^10.0.2",
+    "firebase-functions": "^3.19.0",
+    "stripe": "^8.219.0"
+  },
+  "devDependencies": {
+    "cypress": "^9.3.1",
+    "nodemon": "^2.0.15"
+  }
+}
+[debug] [2022-04-24T02:12:11.276Z] Building nodejs source
+[debug] [2022-04-24T02:12:11.276Z] Analyzing nodejs backend spec
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-5c19fc93-a0b1-43b4-949f-fc4fb9cb0417]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-5c19fc93-a0b1-43b4-949f-fc4fb9cb0417]: exited"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-5c19fc93-a0b1-43b4-949f-fc4fb9cb0417]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-5c19fc93-a0b1-43b4-949f-fc4fb9cb0417]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-162e3563-2964-4d21-8f7f-7631f2a9f626]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-162e3563-2964-4d21-8f7f-7631f2a9f626]: exited"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-162e3563-2964-4d21-8f7f-7631f2a9f626]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-162e3563-2964-4d21-8f7f-7631f2a9f626]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-c18b815c-8210-4dee-ada9-2aa7c5c909c1]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-c18b815c-8210-4dee-ada9-2aa7c5c909c1]: exited"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-c18b815c-8210-4dee-ada9-2aa7c5c909c1]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-c18b815c-8210-4dee-ada9-2aa7c5c909c1]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-42546672-b242-4018-b4e9-36f0b75c95a3]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-42546672-b242-4018-b4e9-36f0b75c95a3]: exited"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-42546672-b242-4018-b4e9-36f0b75c95a3]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-42546672-b242-4018-b4e9-36f0b75c95a3]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-4816ae29-de1c-43fa-849c-e1a7db60177f]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-4816ae29-de1c-43fa-849c-e1a7db60177f]: exited"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-4816ae29-de1c-43fa-849c-e1a7db60177f]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-4816ae29-de1c-43fa-849c-e1a7db60177f]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-471529a7-9586-4a28-8cbc-0f95bcea85bf]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-471529a7-9586-4a28-8cbc-0f95bcea85bf]: exited"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-471529a7-9586-4a28-8cbc-0f95bcea85bf]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-471529a7-9586-4a28-8cbc-0f95bcea85bf]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-dd1c0777-2cb9-43c8-a60d-eb01786c9547]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-dd1c0777-2cb9-43c8-a60d-eb01786c9547]: exited"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-dd1c0777-2cb9-43c8-a60d-eb01786c9547]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-dd1c0777-2cb9-43c8-a60d-eb01786c9547]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-807fb989-f2b1-483b-a93f-a50990e33bc0]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-807fb989-f2b1-483b-a93f-a50990e33bc0]: exited"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-807fb989-f2b1-483b-a93f-a50990e33bc0]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-807fb989-f2b1-483b-a93f-a50990e33bc0]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.295Z] [worker-us-central1-app-b6395cb2-8a23-4218-8c0c-d9e97bdbfa88]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-b6395cb2-8a23-4218-8c0c-d9e97bdbfa88]: exited"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-b6395cb2-8a23-4218-8c0c-d9e97bdbfa88]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-b6395cb2-8a23-4218-8c0c-d9e97bdbfa88]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-d2a2fd55-5bbb-4ae1-97f7-0db552e6f071]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-d2a2fd55-5bbb-4ae1-97f7-0db552e6f071]: exited"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-d2a2fd55-5bbb-4ae1-97f7-0db552e6f071]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-d2a2fd55-5bbb-4ae1-97f7-0db552e6f071]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-b18cc527-774b-42ca-8d15-4dd3a314855b]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-b18cc527-774b-42ca-8d15-4dd3a314855b]: exited"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-b18cc527-774b-42ca-8d15-4dd3a314855b]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-b18cc527-774b-42ca-8d15-4dd3a314855b]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-78b5b267-956a-4544-a831-6df9bdc08e26]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-78b5b267-956a-4544-a831-6df9bdc08e26]: exited"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-78b5b267-956a-4544-a831-6df9bdc08e26]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-78b5b267-956a-4544-a831-6df9bdc08e26]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-a30ab749-66d7-4d19-9402-ea960da54680]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-a30ab749-66d7-4d19-9402-ea960da54680]: exited"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-a30ab749-66d7-4d19-9402-ea960da54680]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-a30ab749-66d7-4d19-9402-ea960da54680]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-98c455ed-8851-4a3b-a108-3512bcb13279]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-98c455ed-8851-4a3b-a108-3512bcb13279]: exited"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-98c455ed-8851-4a3b-a108-3512bcb13279]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-98c455ed-8851-4a3b-a108-3512bcb13279]: FINISHED"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-c597a00e-286e-4c8d-a489-5ae221815f79]: exited {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-c597a00e-286e-4c8d-a489-5ae221815f79]: exited"}}
+[debug] [2022-04-24T02:12:11.296Z] [worker-us-central1-app-c597a00e-286e-4c8d-a489-5ae221815f79]: FINISHED {"metadata":{"emulator":{"name":"functions"},"message":"[worker-us-central1-app-c597a00e-286e-4c8d-a489-5ae221815f79]: FINISHED"}}
