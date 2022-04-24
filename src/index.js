@@ -7,7 +7,6 @@ const functions = require("firebase-functions");
 const app = express();
 const port = process.env.PORT || 8080;
 const serviceAccount = require("../config/serviceAccountKey.json");
-const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
 const checkoutRoutes = require('./app/checkout-routes');
 
@@ -29,8 +28,7 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use("/static", express.static("static/"));
 
-// use res.render to load up an ejs view file
-// index page
+
 app.get("/", function (req, res) {
   res.render("pages/index");
 });
@@ -61,10 +59,6 @@ app.post("/sessionLogin", async (req, res) => {
   // Set session expiration to 5 days.
   const expiresIn = 60*60*24*5*1000;
 
-  // Create the session cookie. This will also verify the ID token in the process.
-  // The session cookie will have the same claims as the ID token.
-  // To only allow session cookie setting on recent sign-in, auth_time in ID token
-  // can be checked to ensure user was recently signed in before creating a session cookie.
   admin.auth()
     .createSessionCookie(idToken, { expiresIn })
     .then(
