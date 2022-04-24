@@ -45,12 +45,13 @@
             <li>feature 2</li>
           </ul>
         </div>
-
-        <button class="button" style="background-color: #707478; 
+        
+        <button class="button" href="/sign-up"style="background-color: #707478; 
                                             width:70%;
                                             color: #FFFFFF">
           Sign up to unlock
         </button>
+        
       </div>
       <div id="premium" class="column" style="
                                             text-align: center;
@@ -67,11 +68,16 @@
             <li>feature 4</li>
           </ul>
         </div>
-        <button class="button" style="background-color: #3F8ABE; 
-                                            width:70%;
-                                            color: #FFFFFF">
-                Subscribe
-        </button>
+
+        <form method="POST">
+          <button class="button" 
+                  style="background-color: #3F8ABE; 
+                        width:70%;
+                        color: #FFFFFF"
+                  formaction="/checkout/premium">
+                  Subscribe
+          </button>
+        </form>
       </div>
       <div id="deluxe" class="column" style="background-color: #f1f3f5;
                                             text-align: center;
@@ -89,11 +95,16 @@
           </ul>
         </div>
 
-        <button class="button" style="background-color: #0d324c; 
-                                            width:70%;
-                                            color: #FFFFFF">
-                Subscribe
-        </button>
+        <form method="POST">
+          <button class="button" 
+                  style="background-color: #0d324c; 
+                        width:70%;
+                        color: #FFFFFF"
+                  formaction="/checkout/deluxe">
+                      
+                  Subscribe
+          </button>
+        </form>
       </div>
     </div>
 

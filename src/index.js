@@ -6,10 +6,10 @@ const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 const app = express();
 const port = process.env.PORT || 8080;
-
 const serviceAccount = require("../config/serviceAccountKey.json");
 const userFeed = require("./app/user-feed");
 const authMiddleware = require("./app/auth-middleware");
+const checkoutRoutes = require('./app/checkout-routes');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -51,8 +51,8 @@ app.get("/route", authMiddleware, async function (req, res) {
   res.render("pages/route", { user: req.user });
 });
 
-app.get("/subscribe", async function (req, res) {
-  res.render("pages/subscribe", { user: req.user});
+app.get("/pricing", async function (req, res) {
+  res.render("pages/pricing", { user: req.user});
 });
 
 app.post("/sessionLogin", async (req, res) => {
@@ -88,20 +88,8 @@ app.get("/sessionLogout", (req, res) => {
   res.redirect("/sign-in");
 });
 
-app.post("/dog-messages", authMiddleware, async (req, res) => {
-  const message = req.body.message;
-  const user = req.user;
-  userFeed.add(user, message)
-    .then(()=>{
-      userFeed.get()
-        .then((feed)=>{
-        res.render("pages/planner", {user: user, feed});
-      })
-    });
-});
 
-// app.listen(port);
-// console.log("Server started at http://localhost:" + port);
+checkoutRoutes(app);
 
 
 exports.app = functions.https.onRequest(app);
