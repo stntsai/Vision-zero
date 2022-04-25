@@ -6,7 +6,12 @@ const authMiddleware = require('./auth-middleware');
 module.exports = (app) => {
     app.post('/checkout/:planName', authMiddleware, async (req, res) => {
         const user = req.user;
-        const amount = parseInt(req.body.amount.replaceAll('.',''))
+        let amount = 0
+        if (req.body.amount.length > 1){
+            amount = parseInt(req.body.amount[0].replaceAll('.',''))
+        } else {
+            amount = parseInt(req.body.amount.replaceAll('.',''))
+        }
 
         const session = await stripe.checkout.sessions.create({
             line_items: [
