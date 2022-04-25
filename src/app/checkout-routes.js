@@ -3,29 +3,33 @@ const stripe = require('stripe')(STRIPE_KEY['STRIPE_KEY']);
 const ENDPOINT_SECRET = STRIPE_KEY['ENDPOINT_SECRET'];
 const authMiddleware = require('./auth-middleware');
 
-const planToPriceIds = {
-    premium: 'price_1KrpkGG8hzKaSpokRAJT3c0t',
-    deluxe: 'price_1KrpkkG8hzKaSpoksq5kydXm'
-}
-
 module.exports = (app) => {
     app.post('/checkout/:planName', authMiddleware, async (req, res) => {
-        const planName = req.params.planName;
-        const priceId = planToPriceIds[planName];
         const user = req.user;
+        let amount = 0
+        if (req.body.amount.length > 1){
+            amount = parseInt(req.body.amount[0].replaceAll('.',''))
+        } else {
+            amount = parseInt(req.body.amount.replaceAll('.',''))
+        }
 
         const session = await stripe.checkout.sessions.create({
-            line_items: [{
-                price: priceId,
+            line_items: [
+                {
+                    price_data: {
+                        unit_amount: amount,
+                        currency: 'usd',
+                        product_data: {
+                            name: 'Donation to Vision Zero',
+                        }
+                },
                 quantity: 1,
             }],
-            mode: 'subscription',
+            mode: 'payment',
             success_url: 'http://localhost:5000/',
-            cancel_url: 'http://localhost:5000/pricing',
+            cancel_url: 'http://localhost:5000/donate',
             client_reference_id: user.sub,
-            // customer:
-        })
-
+        });
         res.redirect(session.url)
     })
 
@@ -37,7 +41,7 @@ module.exports = (app) => {
         try {
             event = stripe.webhooks.constructEvent(payload, sig, ENDPOINT_SECRET);
         } catch (err) {
-            console.err('Failed to cvalidate Webhook', err)
+            console.err('Failed to validate Webhook', err)
             return res.status(400).send(`Webhook Error: ${err.message}`);
         }
 

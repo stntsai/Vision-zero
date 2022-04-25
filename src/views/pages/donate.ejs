@@ -22,14 +22,61 @@
                                   left:5%;">
     <div style="height:10%;
                 position: relative;
-                top:5%;
+                top:15%;
                 text-align: center;">
-      <h1 class="title is-3" style="color: #27445a">
-        Our pricing table
+      <h1 class="title is-2" style="color: #27445a">
+        Make Donation to Vision Zero Team
       </h1>
-      <p class="subtitle is-6" style="color: #27445a"> Join Vision Zero membership to explore more means for road safety! </p>
+      <p class="subtitle is-5" style="color: #27445a"> To support us, please enter the donation you like to make. Any amount is appreciated! </p>
+      
     </div>
+    <div style="height:50%;
+
+                position: relative;
+                top:25%;
+                text-align:center">
+      
+      <form action="/checkout/donation" method="POST">
+        <div style="margin: 1em;">
+          <button class="button" name="amount" value="1000">$10.00</button>
+          <button class="button" name="amount" value="2000">$20.00</button>
+          <button class="button" name="amount" value="3000">$30.00</button>
+          <button class="button" name="amount" value="4000">$40.00</button>
+          <button class="button" name="amount" value="5000">$50.00</button>
+          <button class="button" name="amount" value="6000">$60.00</button>
+        </div>
+        <p>or enter an amount</p>
+        <div class="input-group input-group-lg" style="margin-top:1em">
+          <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+          </div>
+          <input type="text" class="form-control" name="amount"  min="0" max="12000" aria-label="Amount (to the nearest dollar)" placeholder="Enter an Amount. E.g. $12.34">
+        </div>
+        
+
+
+        <button class="button" 
+                  style="
+                        margin-top:2em;
+                        background-color: #3F8ABE; 
+                        width: 20%;
+                        color: #FFFFFF"
+                  formaction="/checkout/premium">
+                  Donate Now
+        </button>
+      </form>
+      <div  style="position: absolute; width: 50%; left: 25%; text-align:left; top:70%; background-color:#f1f3f5; padding: 1em ">
+        <div class="content is-small">
+          <h1 class="title is-6">Where your donation goes</h1>
+          <p><strong>Technology: </strong> Servers, API requests, maintenance, development. Vision Zero website runs on a fraction of what other top websites spend.</p>  
+          <p><strong>People and Projects: </strong> The other top websites have thousands of employees. We have only 3 staff and contractors to support a wide variety of projects, making your donation a great investment in a highly-efficient not-for-profit organization.</p>
+        </div>
+      </div>
     
+    </div>
+  </div>
+
+<!--     
     <div class="columns is-8" style="height:70%;
                                           position: relative;
                                           top:15%;">
@@ -58,18 +105,19 @@
                                             border: 1px solid #707478;
                                             box-shadow: 10px 10px  #dadfe2;
                                             ">
-        <div style="height: 70%; margin-top: 1em">
-          <h1 class="title is-7">Premium</h1>
-          <h1 class="title is-4">$35   /year </h1>
-          <ul>
-            <li>feature 1</li>
-            <li>feature 2</li>
-            <li>feature 3</li>
-            <li>feature 4</li>
-          </ul>
-        </div>
-
-        <form method="POST">
+        <form action="/checkout/premium" method="POST">
+          <div style="height: 70%; margin-top: 1em">
+            <h1 class="title is-7">Premium</h1>
+            <h1 class="title is-4">$35   /year </h1>
+            <ul>
+              <li>feature 1</li>
+              <li>feature 2</li>
+              <li>feature 3</li>
+              <li>feature 4</li>
+            </ul>
+          </div>
+          <span>$</span><input name='amount' class="input" type="number" min="0.01" max="1000000.00" step="0.01" placeholder="Enter an Amount"/>
+        
           <button class="button" 
                   style="background-color: #3F8ABE; 
                         width:70%;
@@ -77,7 +125,7 @@
                   formaction="/checkout/premium">
                   Subscribe
           </button>
-        </form>
+      </form>
       </div>
       <div id="deluxe" class="column" style="background-color: #f1f3f5;
                                             text-align: center;
@@ -106,7 +154,7 @@
           </button>
         </form>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </body>
