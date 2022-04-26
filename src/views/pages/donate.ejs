@@ -14,11 +14,10 @@
     <%- include('../partials/nav') %>
   </header>
 
-
   <div id="pricing-table" style="height: 80%;
                                   width: 90%;
-                                  position: relative;
-                                  top:5%;
+                                  position: absolute;
+                                  top:15%;
                                   left:5%;">
     <div style="height:10%;
                 position: relative;
@@ -31,7 +30,6 @@
       
     </div>
     <div style="height:50%;
-
                 position: relative;
                 top:25%;
                 text-align:center">
@@ -52,9 +50,6 @@
           </div>
           <input type="text" class="form-control" name="amount"  min="0" max="12000" aria-label="Amount (to the nearest dollar)" placeholder="Enter an Amount. E.g. $12.34">
         </div>
-        
-
-
         <button class="button" 
                   style="
                         margin-top:2em;
@@ -65,7 +60,9 @@
                   Donate Now
         </button>
       </form>
-      <div  style="position: absolute; width: 50%; left: 25%; text-align:left; top:70%; background-color:#f1f3f5; padding: 1em ">
+    </div>
+
+      <div  style="position:relative;width: 50%; text-align:left; background-color:#f1f3f5; top:20%; left:25%; padding:1em;">
         <div class="content is-small">
           <h1 class="title is-6">Where your donation goes</h1>
           <p><strong>Technology: </strong> Servers, API requests, maintenance, development. Vision Zero website runs on a fraction of what other top websites spend.</p>  
@@ -73,89 +70,8 @@
         </div>
       </div>
     
-    </div>
+    
   </div>
-
-<!--     
-    <div class="columns is-8" style="height:70%;
-                                          position: relative;
-                                          top:15%;">
-      <div id="basic" class="column" style="background-color: #f1f3f5;
-                                            text-align: center;
-                                            margin: 2em;
-                                            ">
-        <div style="height: 75%; margin-top: 1em">
-          <h1 class="title is-7">Basic</h1>
-          <h1 class="title is-4">Free</h1>
-          <ul>
-            <li>feature 1</li>
-            <li>feature 2</li>
-          </ul>
-        </div>
-        
-        <button class="button" href="/sign-up"style="background-color: #707478; 
-                                            width:70%;
-                                            color: #FFFFFF">
-          Sign up to unlock
-        </button>
-        
-      </div>
-      <div id="premium" class="column" style="
-                                            text-align: center;
-                                            border: 1px solid #707478;
-                                            box-shadow: 10px 10px  #dadfe2;
-                                            ">
-        <form action="/checkout/premium" method="POST">
-          <div style="height: 70%; margin-top: 1em">
-            <h1 class="title is-7">Premium</h1>
-            <h1 class="title is-4">$35   /year </h1>
-            <ul>
-              <li>feature 1</li>
-              <li>feature 2</li>
-              <li>feature 3</li>
-              <li>feature 4</li>
-            </ul>
-          </div>
-          <span>$</span><input name='amount' class="input" type="number" min="0.01" max="1000000.00" step="0.01" placeholder="Enter an Amount"/>
-        
-          <button class="button" 
-                  style="background-color: #3F8ABE; 
-                        width:70%;
-                        color: #FFFFFF"
-                  formaction="/checkout/premium">
-                  Subscribe
-          </button>
-      </form>
-      </div>
-      <div id="deluxe" class="column" style="background-color: #f1f3f5;
-                                            text-align: center;
-                                            margin: 2em;
-                                            ">
-        <div style="height: 75%; margin-top: 1em">
-          <h1 class="title is-7">Deluxe</h1>
-          <h1 class="title is-4" >$49 /year </h1>
-          <ul>
-            <li>feature 1</li>
-            <li>feature 2</li>
-            <li>feature 3</li>
-            <li>feature 4</li>
-            <li>feature 5</li>
-          </ul>
-        </div>
-
-        <form method="POST">
-          <button class="button" 
-                  style="background-color: #0d324c; 
-                        width:70%;
-                        color: #FFFFFF"
-                  formaction="/checkout/deluxe">
-                      
-                  Subscribe
-          </button>
-        </form>
-      </div>
-    </div> -->
-
   </div>
 </body>
 
