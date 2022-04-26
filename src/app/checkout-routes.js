@@ -20,8 +20,8 @@ module.exports = (app) => {
                 quantity: 1,
             }],
             mode: 'subscription',
-            success_url: 'http://localhost:5000/',
-            cancel_url: 'http://localhost:5000/pricing',
+            success_url: 'http://localhost:5004/',
+            cancel_url: 'http://localhost:5004/pricing',
             client_reference_id: user.sub,
             // customer:
         })

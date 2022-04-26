@@ -49,6 +49,10 @@ app.get("/route", authMiddleware, async function (req, res) {
   res.render("pages/route", { user: req.user });
 });
 
+app.get("/route-test", authMiddleware, async function (req, res) {
+  res.render("pages/route-test", { user: req.user });
+});
+
 app.get("/pricing", async function (req, res) {
   res.render("pages/pricing", { user: req.user});
 });
