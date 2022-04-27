@@ -53,8 +53,8 @@ app.get("/route-test", authMiddleware, async function (req, res) {
   res.render("pages/route-test", { user: req.user });
 });
 
-app.get("/pricing", async function (req, res) {
-  res.render("pages/pricing", { user: req.user});
+app.get("/donate", async function (req, res) {
+  res.render("pages/donate", { user: req.user});
 });
 
 app.post("/sessionLogin", async (req, res) => {
