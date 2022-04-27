@@ -24,18 +24,23 @@
             </div>
             <% if(locals.email) { %>
               <div class="navbar-item">
-                <i style="color: #FFFFFF"class="material-icons">person_outline</i>
-                <a href="/planner" >
+                <i style="color: #FFFFFF" class="material-icons">person_outline</i>
+                <a href="/profile-setting" >
                   <h2 style="color: #FFFFFF"><%= email %></h2>
                 </a>
               </div>
             <% } else { %>
               <div class="navbar-item">
                 <a href="/sign-in" >
-                  <h2 style="color: #FFFFFF; font-weight: 900">LOGIN</h2>
+                  <h2 style="color: #FFFFFF;">LOGIN</h2>
                 </a>
               </div>
             <% }%>
+            <div class="navbar-item">
+              <a href="/donate" >
+                <h2 style="color: #FFFFFF">DONATE!</h2>
+              </a>
+            </div>
           </div>
         </div>
   </div>

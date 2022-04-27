@@ -11,17 +11,16 @@
   <div id='subscribe-bg' style="height: 100%;
                                 background-color: #ffffff">
   <header>
-    <%- include('../partials/nav') %>
+    <%- include('../partials/nav', { email: user.email }) %>
   </header>
 
   <div id="pricing-table" style="height: 80%;
                                   width: 90%;
-                                  position: absolute;
+                                  position: relative;
                                   top:15%;
                                   left:5%;">
-    <div style="height:10%;
+    <div style="
                 position: relative;
-                top:15%;
                 text-align: center;">
       <h1 class="title is-2" style="color: #27445a">
         Make Donation to Vision Zero Team
@@ -31,7 +30,7 @@
     </div>
     <div style="height:50%;
                 position: relative;
-                top:25%;
+                top: 5%;
                 text-align:center">
       
       <form action="/checkout/donation" method="POST">
@@ -61,14 +60,13 @@
         </button>
       </form>
     </div>
-
-      <div  style="position:relative;width: 50%; text-align:left; background-color:#f1f3f5; top:20%; left:25%; padding:1em;">
-        <div class="content is-small">
-          <h1 class="title is-6">Where your donation goes</h1>
-          <p><strong>Technology: </strong> Servers, API requests, maintenance, development. Vision Zero website runs on a fraction of what other top websites spend.</p>  
-          <p><strong>People and Projects: </strong> The other top websites have thousands of employees. We have only 3 staff and contractors to support a wide variety of projects, making your donation a great investment in a highly-efficient not-for-profit organization.</p>
-        </div>
+    <div  style="position:relative; width: 50%; text-align:left; background-color:#f1f3f5; left:25%; padding:1em;">
+      <div class="content is-small">
+        <h1 class="title is-6">Where your donation goes</h1>
+        <p><strong>Technology: </strong> Servers, API requests, maintenance, development. Vision Zero website runs on a fraction of what other top websites spend.</p>  
+        <p><strong>People and Projects: </strong> The other top websites have thousands of employees. We have only 3 staff and contractors to support a wide variety of projects, making your donation a great investment in a highly-efficient not-for-profit organization.</p>
       </div>
+    </div>
     
     
   </div>

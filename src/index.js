@@ -30,8 +30,9 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use("/static", express.static("static/"));
 
-app.get("/", function (req, res) {
-  res.render("pages/index");
+
+app.get("/", authMiddleware, async function (req, res) {
+    res.render("pages/index", {user: req.user});
 });
 
 app.get("/sign-in", function (req, res) {
@@ -50,8 +51,8 @@ app.get("/route", authMiddleware, async function (req, res) {
   res.render("pages/route", { user: req.user });
 });
 
-app.get("/donate", async function (req, res) {
-  res.render("pages/donate", { user: req.user});
+app.get("/donate", authMiddleware, async function (req, res) {
+  res.render("pages/donate", { user: req.user });
 });
 
 app.get("/profile-setting", authMiddleware, async function (req, res) {
