@@ -26,8 +26,8 @@ module.exports = (app) => {
                 quantity: 1,
             }],
             mode: 'payment',
-            success_url: 'http://localhost:5000/',
-            cancel_url: 'http://localhost:5000/donate',
+            success_url: 'http://localhost:5004/',
+            cancel_url: 'http://localhost:5004/donate',
             client_reference_id: user.sub,
         });
         res.redirect(session.url)

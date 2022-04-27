@@ -14,5 +14,10 @@
       "source": "**", 
       "function": "app" 
     }] 
-  } 
+  },
+  "emulators": {
+    "hosting": {
+      "port": 5004
+    }
+  }
 }
