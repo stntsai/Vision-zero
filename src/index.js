@@ -30,14 +30,7 @@ app.use("/static", express.static("static/"));
 
 
 app.get("/", authMiddleware, async function (req, res) {
-  console.log(req.user)
-  if (req.user) {
-    console.log(req.user)
     res.render("pages/index", {user: req.user});
-  } else {
-    console.log(req)
-    res.render("pages/index");
-  }
 });
 
 app.get("/sign-in", function (req, res) {
