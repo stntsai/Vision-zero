@@ -26,7 +26,7 @@ module.exports = (app) => {
                 quantity: 1,
             }],
             mode: 'payment',
-            success_url: 'http://localhost:5004/',
+            success_url: 'http://localhost:5004/route',
             cancel_url: 'http://localhost:5004/donate',
             client_reference_id: user.sub,
         });
