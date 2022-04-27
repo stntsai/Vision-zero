@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" style="height:100%">
+
+<head>
+  <%- include('../partials/head') %>
+</head>
+
+<body style="height:100%">
+  <div id='login-bg' style="height: 100%;
+                            background-image: url('../../../static/login-background.jpg'); 
+                            background-size: cover;
+                            ">
+    <header>
+      <%- include('../partials/nav') %>
+    </header>
+      <div id="profile-setting-box" style="background-color: #e5e5e5; 
+                                opacity: 100%;
+                                height: 50%;
+                                width: 50%;
+                                position: relative;
+                                top:20%;
+                                left:25%;
+                                ">
+        <div style="height:80%;
+                    width: 80%;
+                    position: relative;
+                    top:10%;
+                    left: 10%">
+          <h1 class="title is-2" style="text-align: center" >Your Profile</h1>
+          <div class="'container">
+            <div class="columns">
+              <div class="column is-half">
+  
+                <h1 class="title is-size-5" style="text-decoration: underline">
+                   Name: 
+                </h1>
+                <h1 class="title is-size-6">
+                  <%= user_info.firstName%> <%= user_info.lastName%>
+               </h1>
+                <div style="margin-top: 1em; margin-bottom: 2em"></div>
+              
+                <h1 class="title is-size-5" style="text-decoration: underline">
+                  Email address: 
+                </h1>
+                <h1 class="title is-size-6">
+                  <%= user_info.email%> 
+                </h1>
+                <div style="margin-top: 1em; margin-bottom: 2em"></div>
+  
+                <h1 class="title is-size-5" style="text-decoration: underline">
+                  Prefered Travel Mode: 
+                </h1>
+                <h1 class="title is-size-6">
+                  <%= user_info.preferedMode%>  
+                </h1>
+                <div style="margin-top: 1em; margin-bottom: 2em"></div>
+            </div>
+  
+            <div class="column is-half">
+              <h1 class="title is-size-6">
+                <figure class="image is-4by3">
+                  <img src="../../../static/profile_photo.png" style="width: 250px; height:auto; border: 20px solid #ddd;" class="rounded-corners">
+                </figure>
+              </h1>
+  
+            </div>
+          </div>
+
+
+          </div>
+          
+      </div>
+  </div>
+</body>
+<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.4/firebase-auth-compat.js"></script>
+
