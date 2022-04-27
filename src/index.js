@@ -35,12 +35,12 @@ app.get("/", authMiddleware, async function (req, res) {
     res.render("pages/index", {user: req.user});
 });
 
-app.get("/sign-in", function (req, res) {
-  res.render("pages/sign-in");
+app.get("/sign-in",authMiddleware, async function (req, res) {
+  res.render("pages/sign-in" , { user: req.user });
 });
 
-app.get("/sign-up", function (req, res) {
-  res.render("pages/sign-up");
+app.get("/sign-up", authMiddleware, async function (req, res) {
+  res.render("pages/sign-up", { user: req.user });
 });
 
 app.get("/planner", authMiddleware, async function (req, res) {
