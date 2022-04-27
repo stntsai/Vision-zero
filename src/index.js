@@ -30,14 +30,9 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use("/static", express.static("static/"));
 
-<<<<<<< HEAD
 
 app.get("/", authMiddleware, async function (req, res) {
     res.render("pages/index", {user: req.user});
-=======
-app.get("/", function (req, res) {
-  res.render("pages/index");
->>>>>>> main
 });
 
 app.get("/sign-in", function (req, res) {
