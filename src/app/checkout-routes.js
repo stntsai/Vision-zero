@@ -7,7 +7,7 @@ module.exports = (app) => {
     app.post('/checkout/:planName', authMiddleware, async (req, res) => {
         const user = req.user;
         let amount = 0
-        if (req.body.amount.length > 1){
+        if (req.body.amount[1] == ""){
             amount = parseInt(req.body.amount[0].replaceAll('.',''))
         } else {
             amount = parseInt(req.body.amount.replaceAll('.',''))
