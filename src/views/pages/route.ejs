@@ -10,11 +10,12 @@
     
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-    <script>
+    <script>    
+        var map;    
         function initMap() {
             const directionsRenderer = new google.maps.DirectionsRenderer();
             const directionsService = new google.maps.DirectionsService();
-            const map = new google.maps.Map(document.getElementById("map"), {
+            map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 10,
                 center: { lat: 40.73, lng: -73.94 },
                 disableDefaultUI: true,
@@ -48,6 +49,69 @@
             } else if (mode == "transit") {
                 modeOption = google.maps.TravelMode.TRANSIT;
             }
+
+            // dangerous intersection points for demo
+            const contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h1 id="firstHeading" class="firstHeading">40.763823, -73.969946</h1>' +
+                '<div id="bodyContent">' +
+                "<p><b>Cause:</b>Drunk</p>" +
+                "</div>" +
+                "</div>";
+
+            const infowindow = new google.maps.InfoWindow({
+                content: contentString,
+            });
+
+            const marker = new google.maps.Marker({
+                position: { lat: 40.763823, lng: -73.969946 },
+                map,
+                icon: new google.maps.MarkerImage('static/exclamation.svg',
+                                                    null, null, null, new google.maps.Size(20,22)),
+                title: "CT to CP",
+            });
+
+            marker.addListener("click", () => {
+                infowindow.open({
+                anchor: marker,
+                map,
+                shouldFocus: false,
+                });
+            });
+
+            // pt 2
+            const contentString1 =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h1 id="firstHeading" class="firstHeading">40.747806, -73.968357</h1>' +
+                '<div id="bodyContent">' +
+                "<p><b>Cause:</b>Speeding</p>" +
+                "</div>" +
+                "</div>";
+
+            const infowindow1 = new google.maps.InfoWindow({
+                content: contentString1,
+            });
+
+            const marker1 = new google.maps.Marker({
+                position: { lat: 40.747806, lng: -73.968357 },
+                map,
+                icon: new google.maps.MarkerImage('static/exclamation.svg',
+                                                    null, null, null, new google.maps.Size(20,22)),
+                title: "CP to WTC",
+            });
+
+
+            marker1.addListener("click", () => {
+                infowindow1.open({
+                anchor: marker1,
+                map,
+                shouldFocus: false,
+                });
+            });
 
             directionsService
                 .route({
