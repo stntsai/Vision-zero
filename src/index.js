@@ -167,11 +167,11 @@ app.post('/addProfile', async function(req, res){
   // res.send("")
 });
 
-// checkoutRoutes(app);
-// exports.app = functions.https.onRequest(app);
+checkoutRoutes(app);
+exports.app = functions.https.onRequest(app);
 
-app.listen(port);
-console.log("Server started at http://localhost:" + port);
+// app.listen(port);
+// console.log("Server started at http://localhost:" + port);
 
 
 
