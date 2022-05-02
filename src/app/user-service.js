@@ -2,7 +2,6 @@
 // // for unit testing
 // const admin = require("firebase-admin");
 
-
 // const serviceAccount = require("./../../config/serviceAccountKey.json");
 
 // admin.initializeApp({
@@ -58,7 +57,46 @@ module.exports = {
         return indivTravelHistory.data();
     },
 
-    getNearbyCrashCoordinate:  async (db, latlngs) => {
+    gerAllCrashCoordinates:  async (db) => {
+        const snapshotCrashData = await db.collection('crashHistory_test').get();
+
+        const crashHistory = [];
+
+        // load lat and long into an array
+        snapshotCrashData.forEach(doc => {
+
+            lat = doc.data().lat
+            long = doc.data().long
+            crashHistory.push([lat, long])
+        });
+
+        return crashHistory
+    },
+
+    getNearbyCrashCoordinates: (crashHistory, latlngs) => {
+        
+        window = 0.0007
+        
+        const routeCoordinates =[]
+        const outputCoordinates = []
+
+        latlngs.forEach(element => {
+            routeCoordinates.push([element.lat, element.lng])
+        });
+
+        crashHistory.forEach(crashPoint => {
+            routeCoordinates.forEach(routePoint => {
+                if((crashPoint[0] <= routePoint[0]+ window) && (crashPoint[0] >= routePoint[0]- window)){
+                    if((crashPoint[1] <= routePoint[1]+ window) && (crashPoint[1] >= routePoint[1] - window)){
+                        outputCoordinates.push(routePoint)
+                };  
+            };  
+            });
+        });
+        return outputCoordinates
+        },
+
+    getNearbyCrashCoordinates_previous:  async (db, latlngs) => {
         
         window = 0.0007
         const snapshotCrashData = await db.collection('crashHistory_test').get();
@@ -75,7 +113,6 @@ module.exports = {
             long = doc.data().long
             crashHistory.push([lat, long])
         });
-
 
         latlngs.forEach(element => {
             routeCoordinates.push([element.lat, element.lng])
