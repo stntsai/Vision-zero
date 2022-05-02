@@ -25,8 +25,13 @@
             <% if(locals.email) { %>
               <div class="navbar-item">
                 <i style="color: #FFFFFF" class="material-icons">person_outline</i>
-                <a href="/profile-setting" >
+                <a href="/profile" >
                   <h2 style="color: #FFFFFF"><%= email %></h2>
+                </a>
+              </div>
+              <div class="navbar-item">
+                <a href="/profile-setting">
+                  <h2 style="color: #FFFFFF">SETTING</h2>
                 </a>
               </div>
             <% } else { %>
