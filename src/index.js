@@ -31,15 +31,15 @@ app.set("views", path.join(__dirname, "views"));
 app.use("/static", express.static("static/"));
 
 
-app.get("/", authMiddleware, async function (req, res) {
+app.get("/", async function (req, res) {
     res.render("pages/index", {user: req.user});
 });
 
-app.get("/sign-in",authMiddleware, async function (req, res) {
+app.get("/sign-in", async function (req, res) {
   res.render("pages/sign-in" , { user: req.user });
 });
 
-app.get("/sign-up", authMiddleware, async function (req, res) {
+app.get("/sign-up", async function (req, res) {
   res.render("pages/sign-up", { user: req.user });
 });
 
@@ -56,13 +56,20 @@ app.get("/donate", authMiddleware, async function (req, res) {
 });
 
 app.get("/profile-setting", authMiddleware, async function (req, res) {
-  res.render("pages/user-profile-setting", { user: req.user });
+  
+  const db = admin.firestore();
+  const user_info = await UserService.getUserByEmail(db,req.user.email);
+  res.render("pages/user-profile-setting", {user_info:user_info, user:req.user});
+
+  // res.render("pages/user-profile-setting", { user: req.user });
 });
 
-app.get("/user-profile", authMiddleware, async function (req, res) {
-  res.render("pages/user-profile", { user: req.user });
-});
+app.get("/profile", authMiddleware, async function (req, res) {
 
+  const db = admin.firestore();
+  const user_info = await UserService.getUserByEmail(db,req.user.email);
+  res.render("pages/user-profile", {user_info:user_info});
+});
 
 // app.get("/user-profile", async function (req, res) {
 //   res.render("pages/user-profile", { user: req.user });
@@ -137,13 +144,14 @@ app.post("/sessionLogin", async (req, res) => {
     );
 });
 
-app.get("/sessionLogout", (req, res) => {
-  res.clearCookie("session");
-  res.redirect("/sign-in");
-});
+// app.get("/sessionLogout", (req, res) => {
+//   res.clearCookie("session");
+//   // res.redirect("pages/sign-in");
+// });
+
+
 
 // save profile data to firestore
-
 app.post('/addProfile', async function(req, res){
 
   // console.log(req.body)
@@ -155,15 +163,15 @@ app.post('/addProfile', async function(req, res){
   const user_info = req.body
   console.log(user_info)
   // res.render("pages/user-profile-setting")
-  res.render("pages/user-profile", {user_info:user_info});
+  res.redirect("/profile")
   // res.send("")
 });
 
-checkoutRoutes(app);
-exports.app = functions.https.onRequest(app);
+// checkoutRoutes(app);
+// exports.app = functions.https.onRequest(app);
 
-// app.listen(port);
-// console.log("Server started at http://localhost:" + port);
+app.listen(port);
+console.log("Server started at http://localhost:" + port);
 
 
 

@@ -35,12 +35,12 @@ module.exports = {
         })
     },
 
-    addCrashHistory: async (db, crashId, long, lat, datetime) =>{
-        const docRef = db.collection('crashHistory').doc()
+    addCrashHistory: async (db, crashId, time, lat, long) =>{
+        const docRef = db.collection('crashHistory').doc(crashId)
         await docRef.set({
+            time: time,
             long:long,
-            lat:lat,
-            datetime: datetime
+            lat:lat
         })
     },
     

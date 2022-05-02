@@ -11,7 +11,7 @@
                             background-size: cover;
                             ">
     <header>
-      <%- include('../partials/nav', { email: user.email }) %>
+      <%- include('../partials/nav') %>
     </header>
       <div id="login-box" style="background-color: #e5e5e5; 
                                 opacity: 90%;
@@ -103,7 +103,7 @@
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({idToken}) // add the users ID token here
               }).then(() => {
-                window.location.href = '/planner';
+                window.location.href = '/route';
               })
             })
           })
