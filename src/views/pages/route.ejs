@@ -2,6 +2,7 @@
 <html lang="en" style="height:100%"
 >
   <head>
+    <div id="crashHistory" data-test= <%=crashHistory%> type="hidden"></div>
     <%- include('../partials/head') %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -11,7 +12,32 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <script>    
-        var map;    
+        var data = document.getElementById("crashHistory").dataset.test;
+        var map; 
+        
+        function getNearbyCrashCoordinates(crashHistory, latlngs){
+        
+            window = 0.7;
+            
+            const routeCoordinates =[];
+            const outputCoordinates = [];
+
+            latlngs.forEach(element => {
+                routeCoordinates.push([element.lat, element.lng]);
+             });
+
+        crashHistory.forEach(crashPoint => {
+            routeCoordinates.forEach(routePoint => {
+                if((crashPoint[0] <= routePoint[0]+ window) && (crashPoint[0] >= routePoint[0] - window)){
+                    if((crashPoint[1] <= routePoint[1]+ window) && (crashPoint[1] >= routePoint[1] - window)){
+                        outputCoordinates.push(routePoint);
+                    };  
+                };  
+            });
+        });
+        return outputCoordinates;
+    }
+        
         function initMap() {
             const directionsRenderer = new google.maps.DirectionsRenderer();
             const directionsService = new google.maps.DirectionsService();
@@ -113,6 +139,8 @@
                 });
             });
 
+            var latlngs;
+            var results;
             directionsService
                 .route({
                     origin: start,
@@ -121,6 +149,19 @@
                 })
                 .then((response) => {
                     directionsRenderer.setDirections(response);
+                    latlngs = JSON.parse(JSON.stringify(response.routes[0]["overview_path"]));
+                    // console.log(latlngs);
+                    // for (var key in latlngs){
+                    //     lat = latlngs[key]["lat"];
+                    //     long = latlngs[key]["lng"];
+                    //     // console.log(`${latlngs[key]["lat"]} : ${latlngs[key]["lng"]}`);
+                    // }
+                    console.log(data);
+                    // console.log(latlngs);
+
+                    // results = getNearbyCrashCoordinate(data, latlngs);
+
+                    // console.log(results);
                 })
                 .catch((e) => {
                     if ((start == "") || (end == "")) {
@@ -132,8 +173,6 @@
         }
 
         window.initMap = initMap;
-
-
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChvBupfwisVPAWC7pJOS-RlKAuWjrLymw&callback=initMap"

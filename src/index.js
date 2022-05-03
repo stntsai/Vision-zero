@@ -48,7 +48,11 @@ app.get("/planner", authMiddleware, async function (req, res) {
 });
 
 app.get("/route", authMiddleware, async function (req, res) {
-  res.render("pages/route", { user: req.user });
+
+  const db = admin.firestore();
+  const crashHistory = await UserService.gerAllCrashCoordinates(db);
+
+  res.render("pages/route", { user: req.user, crashHistory:crashHistory});
 });
 
 app.get("/donate", authMiddleware, async function (req, res) {

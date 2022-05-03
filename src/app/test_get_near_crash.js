@@ -14,16 +14,10 @@ admin.initializeApp({
 
 const db = admin.firestore()
 
-async function getNearbyCrashCoordinate(db, latlngs){
-
-    window = 0.0007
-    
+async function gerAllCrashCoordinates(db){
     const snapshotCrashData = await db.collection('crashHistory_test').get();
 
     const crashHistory = [];
-    const routeCoordinates =[]
-    const outputCoordinates = []
-
 
     // load lat and long into an array
     snapshotCrashData.forEach(doc => {
@@ -33,6 +27,15 @@ async function getNearbyCrashCoordinate(db, latlngs){
         crashHistory.push([lat, long])
     });
 
+    return crashHistory
+}
+
+function getNearbyCrashCoordinates(crashHistory, latlngs) {
+    
+    window = 0.0007
+    
+    const routeCoordinates =[]
+    const outputCoordinates = []
 
     latlngs.forEach(element => {
         routeCoordinates.push([element.lat, element.lng])
@@ -47,11 +50,15 @@ async function getNearbyCrashCoordinate(db, latlngs){
         };  
         });
     });
+    return outputCoordinates
+}
+
+get
 
 
-    console.log(crashHistory);
-    console.log(routeCoordinates);
-    console.log(outputCoordinates);
+console.log(crashHistory);
+console.log(routeCoordinates);
+console.log(outputCoordinates);
 
     
 

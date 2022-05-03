@@ -94,7 +94,7 @@ module.exports = {
             });
         });
         return outputCoordinates
-        },
+    },
 
     getNearbyCrashCoordinates_previous:  async (db, latlngs) => {
         
