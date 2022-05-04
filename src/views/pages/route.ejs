@@ -2,6 +2,7 @@
 <html lang="en" style="height:100%"
 >
   <head>
+    <div id="crashHistory" data-test= <%=crashHistory%> type="hidden"></div>
     <%- include('../partials/head') %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -11,7 +12,43 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <script>    
-        var map;    
+        var data = document.getElementById("crashHistory").dataset.test;
+        var map; 
+        
+        function getNearbyCrashCoordinates(crashHistory, latlngs){
+            var window = 0.0007
+    
+            var routeCoordinates =[]
+            var outputCoordinates = []
+
+            
+            var crash_history = [];
+            var crashHistory_str = crashHistory.split(",");
+            for (let i = 0; i < crashHistory_str.length; i += 2) {
+                crash_history.push([parseFloat(crashHistory_str[i]), parseFloat(crashHistory_str[i+1])])
+            }
+            
+            latlngs.forEach(element => {
+                routeCoordinates.push([element.lat, element.lng])
+            });
+
+            outerloop:
+            for (let crashPoint of crash_history){
+                innerloop:
+                for (let routePoint of routeCoordinates){
+                    if((crashPoint[0] <= (routePoint[0]+ window)) && (crashPoint[0] >= routePoint[0]- window)){
+                        if((crashPoint[1] <= routePoint[1]+ window) && (crashPoint[1] >= routePoint[1] - window)){
+                            // outputCoordinates.indexOf(crashPoint) === -1 ? outputCoordinates.push(crashPoint) : console.log()
+                            outputCoordinates.push(crashPoint);
+                            break innerloop;
+                        };  
+                    };  
+                };
+            };
+            console.log(outputCoordinates)
+            return outputCoordinates
+    }
+        
         function initMap() {
             const directionsRenderer = new google.maps.DirectionsRenderer();
             const directionsService = new google.maps.DirectionsService();
@@ -50,69 +87,8 @@
                 modeOption = google.maps.TravelMode.TRANSIT;
             }
 
-            // dangerous intersection points for demo
-            const contentString =
-                '<div id="content">' +
-                '<div id="siteNotice">' +
-                "</div>" +
-                '<h1 id="firstHeading" class="firstHeading">40.763823, -73.969946</h1>' +
-                '<div id="bodyContent">' +
-                "<p><b>Cause:</b>Drunk</p>" +
-                "</div>" +
-                "</div>";
-
-            const infowindow = new google.maps.InfoWindow({
-                content: contentString,
-            });
-
-            const marker = new google.maps.Marker({
-                position: { lat: 40.763823, lng: -73.969946 },
-                map,
-                icon: new google.maps.MarkerImage('static/exclamation.svg',
-                                                    null, null, null, new google.maps.Size(20,22)),
-                title: "CT to CP",
-            });
-
-            marker.addListener("click", () => {
-                infowindow.open({
-                anchor: marker,
-                map,
-                shouldFocus: false,
-                });
-            });
-
-            // pt 2
-            const contentString1 =
-                '<div id="content">' +
-                '<div id="siteNotice">' +
-                "</div>" +
-                '<h1 id="firstHeading" class="firstHeading">40.747806, -73.968357</h1>' +
-                '<div id="bodyContent">' +
-                "<p><b>Cause:</b>Speeding</p>" +
-                "</div>" +
-                "</div>";
-
-            const infowindow1 = new google.maps.InfoWindow({
-                content: contentString1,
-            });
-
-            const marker1 = new google.maps.Marker({
-                position: { lat: 40.747806, lng: -73.968357 },
-                map,
-                icon: new google.maps.MarkerImage('static/exclamation.svg',
-                                                    null, null, null, new google.maps.Size(20,22)),
-                title: "CP to WTC",
-            });
-
-
-            marker1.addListener("click", () => {
-                infowindow1.open({
-                anchor: marker1,
-                map,
-                shouldFocus: false,
-                });
-            });
-
+            var latlngs;
+            var results;
             directionsService
                 .route({
                     origin: start,
@@ -121,19 +97,59 @@
                 })
                 .then((response) => {
                     directionsRenderer.setDirections(response);
+                    latlngs = JSON.parse(JSON.stringify(response.routes[0]["overview_path"]));
+                    results = getNearbyCrashCoordinates(data, latlngs);
+
+                    for (let res of results){
+                        var cood = res[0].toString() + ", " + res[1].toString();
+                        console.log(cood);
+                        var contentString =
+                            '<div id="content">' +
+                            '<div id="siteNotice">' +
+                            "</div>" +
+                            '<h1 id="firstHeading" class="firstHeading">' + cood + '</h1>' +
+                            '<div id="bodyContent">' +
+                            "</div>" +
+                            "</div>";
+
+                        var marker = new google.maps.Marker({  
+                            map: map, 
+                            position: { lat: res[0], lng: res[1] },
+                            icon: new google.maps.MarkerImage('static/exclamation.svg',
+                                                                null, null, null, new google.maps.Size(20,22)),
+                        });
+
+                        map.setCenter(marker.getPosition())
+
+                        var content = '<div id="content">' +
+                            '<div id="siteNotice">' +
+                            "</div>" +
+                            '<h1 id="firstHeading" class="firstHeading">' + cood + '</h1>' +
+                            '<div id="bodyContent">' +
+                            "</div>" +
+                            "</div>";
+
+                        var infowindow = new google.maps.InfoWindow();
+
+                        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+                            return function() {
+                            infowindow.setContent(content);
+                            infowindow.open(map,marker);
+                            };
+                        })(marker,content,infowindow)); 
+                    }
                 })
                 .catch((e) => {
                     if ((start == "") || (end == "")) {
                         alert("Please enter addresses.");
                     } else {
-                        window.alert("Directions request failed due to " + status);
+                        window.alert("Directions request failed");
+                        console.log(status);
                     }
                 });
         }
 
         window.initMap = initMap;
-
-
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChvBupfwisVPAWC7pJOS-RlKAuWjrLymw&callback=initMap"
@@ -185,7 +201,9 @@
                         height: 60px;
                         margin-left: 5px;
                         margin-right: 10px;" 
-                type="text">
+                type="text"
+                
+                >
 
         <i class="fas fa-arrow-right fas fa-2x" style="padding-top: 15px; 
                                                         color: #7BB6D9;
@@ -203,7 +221,8 @@
                         height: 60px;
                         margin-left: 20px;
                         position: relative;" 
-                type="text">
+                type="text"
+                >
         <a href="/sign-in" >
         <a id="searchButton" class="button is-light" style="top:-85%; 
                             background-color: #3F8ABE; 

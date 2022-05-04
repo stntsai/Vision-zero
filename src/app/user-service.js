@@ -57,7 +57,7 @@ module.exports = {
         return indivTravelHistory.data();
     },
 
-    gerAllCrashCoordinates:  async (db) => {
+    getAllCrashCoordinates:  async (db) => {
         const snapshotCrashData = await db.collection('crashHistory_test').get();
 
         const crashHistory = [];
@@ -75,26 +75,28 @@ module.exports = {
 
     getNearbyCrashCoordinates: (crashHistory, latlngs) => {
         
-        window = 0.0007
         
-        const routeCoordinates =[]
-        const outputCoordinates = []
+    window = 0.0007
+    
+    const routeCoordinates =[]
+    const outputCoordinates = []
 
-        latlngs.forEach(element => {
-            routeCoordinates.push([element.lat, element.lng])
-        });
+    latlngs.forEach(element => {
+        routeCoordinates.push([element.lat, element.lng])
+    });
 
-        crashHistory.forEach(crashPoint => {
-            routeCoordinates.forEach(routePoint => {
-                if((crashPoint[0] <= routePoint[0]+ window) && (crashPoint[0] >= routePoint[0]- window)){
-                    if((crashPoint[1] <= routePoint[1]+ window) && (crashPoint[1] >= routePoint[1] - window)){
-                        outputCoordinates.push(routePoint)
-                };  
+    crashHistory.forEach(crashPoint => {
+        // console.log(crashHistory);
+        routeCoordinates.forEach(routePoint => {
+            if((crashPoint[0] <= routePoint[0]+ window) && (crashPoint[0] >= routePoint[0]- window)){
+                if((crashPoint[1] <= routePoint[1]+ window) && (crashPoint[1] >= routePoint[1] - window)){
+                    outputCoordinates.push(routePoint)
             };  
-            });
+        };  
         });
-        return outputCoordinates
-        },
+    });
+    return outputCoordinates
+    },
 
     getNearbyCrashCoordinates_previous:  async (db, latlngs) => {
         
