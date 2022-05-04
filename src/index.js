@@ -10,6 +10,7 @@ const serviceAccount = require("../config/serviceAccountKey.json");
 const authMiddleware = require("./app/auth-middleware");
 const checkoutRoutes = require('./app/checkout-routes');
 const UserService = require('./app/user-service');
+const { user } = require("firebase-functions/v1/auth");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -72,8 +73,19 @@ app.get("/profile-setting", authMiddleware, async function (req, res) {
 app.get("/profile", authMiddleware, async function (req, res) {
 
   const db = admin.firestore();
-  const user_info = await UserService.getUserByEmail(db,req.user.email);
-  res.render("pages/user-profile", {user_info:user_info});
+  
+  // const user_info = await UserService.getUserByEmail(db,req.user.email);
+  // res.render("pages/user-profile", {user_info:user_info});
+
+  await UserService.getUserByEmail(db,req.user.email).then(user_info => { 
+    console.log(user_info)
+    if(user_info == undefined){
+      res.redirect("/profile-setting");
+    }
+    else{
+      res.render("pages/user-profile", {user_info:user_info});
+    }
+  }) 
 });
 
 // app.get("/user-profile", async function (req, res) {
@@ -149,10 +161,10 @@ app.post("/sessionLogin", async (req, res) => {
     );
 });
 
-// app.get("/sessionLogout", (req, res) => {
-//   res.clearCookie("session");
-//   // res.redirect("pages/sign-in");
-// });
+app.get("/sessionLogout", (req, res) => {
+  res.clearCookie("session");
+  // res.redirect("pages/sign-in");
+});
 
 
 
