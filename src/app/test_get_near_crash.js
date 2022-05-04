@@ -13,11 +13,11 @@ admin.initializeApp({
 });
 
 const db = admin.firestore()
+var crashHistory = [];
 
-async function gerAllCrashCoordinates(db){
+
+async function getAllCrashCoordinates(db){
     const snapshotCrashData = await db.collection('crashHistory_test').get();
-
-    const crashHistory = [];
 
     // load lat and long into an array
     snapshotCrashData.forEach(doc => {
@@ -26,7 +26,6 @@ async function gerAllCrashCoordinates(db){
         long = doc.data().long
         crashHistory.push([lat, long])
     });
-
     return crashHistory
 }
 
@@ -42,6 +41,7 @@ function getNearbyCrashCoordinates(crashHistory, latlngs) {
     });
 
     crashHistory.forEach(crashPoint => {
+        // console.log(crashHistory);
         routeCoordinates.forEach(routePoint => {
             if((crashPoint[0] <= routePoint[0]+ window) && (crashPoint[0] >= routePoint[0]- window)){
                 if((crashPoint[1] <= routePoint[1]+ window) && (crashPoint[1] >= routePoint[1] - window)){
@@ -53,12 +53,20 @@ function getNearbyCrashCoordinates(crashHistory, latlngs) {
     return outputCoordinates
 }
 
-get
+const latlngs = [{'lat':40.76332917930657, 'lng':-73.92195850889065}]
+
+getAllCrashCoordinates(db).then(crashHistory => {
+    console.log(getNearbyCrashCoordinates(crashHistory,latlngs));
+})
+
+// )
 
 
-console.log(crashHistory);
-console.log(routeCoordinates);
-console.log(outputCoordinates);
+
+
+// console.log(crashHistory);
+// console.log(routeCoordinates);
+// console.log(outputCoordinates);
 
     
 
@@ -76,7 +84,7 @@ console.log(outputCoordinates);
 
     // return doc.data();
 
-}
+// }
 
 // describe('UserService', () => {
 
@@ -100,23 +108,23 @@ console.log(outputCoordinates);
 //     })
 // })
 
-const latlngs = [
-    {
-        "lat": 40.72327693,
-        "lng": -73.9374092
-    },
-    {
-        "lat": 40.75574,
-        "lng": -73.95429
-    },
-    {
-        "lat": 40.755680000000005,
-        "lng": -73.9544
-    },
-    {
-        "lat": 40.75558,
-        "lng": -73.95458
-    }]
+// const latlngs = [
+//     {
+//         "lat": 40.72327693,
+//         "lng": -73.9374092
+//     },
+//     {
+//         "lat": 40.75574,
+//         "lng": -73.95429
+//     },
+//     {
+//         "lat": 40.755680000000005,
+//         "lng": -73.9544
+//     },
+//     {
+//         "lat": 40.75558,
+//         "lng": -73.95458
+//     }]
 
 
-getNearbyCrashCoordinate(db,latlngs);
+// getNearbyCrashCoordinate(db,latlngs);

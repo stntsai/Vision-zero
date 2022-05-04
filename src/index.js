@@ -50,9 +50,10 @@ app.get("/planner", authMiddleware, async function (req, res) {
 app.get("/route", authMiddleware, async function (req, res) {
 
   const db = admin.firestore();
-  const crashHistory = await UserService.gerAllCrashCoordinates(db);
+  UserService.getAllCrashCoordinates(db).then(crashHistory => {
+    res.render("pages/route", { user: req.user, crashHistory:crashHistory});
+  })
 
-  res.render("pages/route", { user: req.user, crashHistory:crashHistory});
 });
 
 app.get("/donate", authMiddleware, async function (req, res) {
