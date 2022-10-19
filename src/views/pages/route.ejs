@@ -160,9 +160,15 @@
 
   <body>
     <header>
-        <%- include('../partials/nav', { email: user.email }) %>
+        <!-- change to test -->
+        <%- include('../partials/nav', { email: email }) %> 
     </header>
-
+<div id="navigation-app"></div>
+<div id="container">
+    <div id="map"></div>
+    <div id="sidebar"></div>
+  </div>
+ <div class="card" id="search-card">
     <div class="control" style="left: 16%;top: 2%; color: #635E5E;">
         <label class="radio">
             <input type="radio" value="driving" name="mode"  style="margin-right: 8px;" checked>
@@ -182,62 +188,35 @@
         </label>
     </div>
 
-    <div id="search-box" style="background-color: #DDDDDD; 
-                                opacity: 90%;
-                                height: 60px;
-                                width: 60%;
-                                position: relative;
-                                top:3%;
-                                left:16%;">
+    <div >
 
-        <input id="origin"
-                class="input" 
+        <input id="origin" class="address-input"
+            
                 required type="text" 
                 name="start-point"  
                 placeholder="Origin" 
-                style="background-color: #DDDDDD; 
-                        opacity: 90%; 
-                        width: 45%; 
-                        height: 60px;
-                        margin-left: 5px;
-                        margin-right: 10px;" 
-                type="text"
-                
-                >
+                type="text" >
 
-        <i class="fas fa-arrow-right fas fa-2x" style="padding-top: 15px; 
+        <!-- <i class="fas fa-arrow-right fas fa-2x" style="padding-top: 15px; 
                                                         color: #7BB6D9;
-                                                        margin-left: 10px;"></i>
+                                                        margin-left: 10px;"></i> -->
 
 
         <input id="destination"
-               class="input" 
                required type="text" 
+               class="address-input"
                name="destination"  
-               placeholder="Destination" 
-               style="background-color: #DDDDDD; 
-                        opacity: 90%; 
-                        width: 45%; 
-                        height: 60px;
-                        margin-left: 20px;
-                        position: relative;" 
+               placeholder="Destination"
                 type="text"
                 >
         <a href="/sign-in" >
-        <a id="searchButton" class="button is-light" style="top:-85%; 
-                            background-color: #3F8ABE; 
-                            color: #FFFFFF; 
-                            text-align: center; 
-                            position: relative;
-                            left: 101%">
-            Search
+        <a id="searchButton" >
+            Go
         </a>
     </div>
-      <div id="container">
-        <div id="map"></div>
-        <div id="sidebar"></div>
-      </div>
-
+    </div>
+    
+    </body>
     <!-- 
      The `defer` attribute causes the callback to execute after the full HTML
      document has been parsed. For non-blocking uses, avoiding race conditions,
@@ -245,6 +224,5 @@
      with https://www.npmjs.com/package/@googlemaps/js-api-loader.
     -->
 
-  </body>
   <%- include('../partials/footer') %>
 </html>

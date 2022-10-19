@@ -28,6 +28,7 @@ body {
   flex-basis: 0;
   flex-grow: 4;
   height: 100%;
+  flex: auto;
 }
 
 #floating-panel {
@@ -60,9 +61,7 @@ body {
   height: auto;
 }
 
-#map {
-  flex: auto;
-}
+
 
 #sidebar {
   flex: 0 1 auto;
@@ -70,4 +69,49 @@ body {
 }
 #sidebar > div {
   padding: 0.5rem;
+}
+
+#searchButton {
+  background-color: #3f8abe;
+  color: #ffffff;
+  text-align: center;
+
+}
+
+#search-card{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width:300px;
+  height: 400px;
+  padding:5%;
+  border-radius: 30px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: black;
+  position: absolute;
+  top: 150px;
+  left: 5%;
+}
+
+.address-input{
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  width: 100%;
+  height: 100%;
+  border: solid;
+  font-size: 18px;
+  padding: 5px;
+  border-radius: 20px;
+  border-width: 1px;
+  position: relative;
+}
+
+#searchButton{
+  background-color: #D9D9D9;
+  color: black;
+  text-align: center;
+  width: 200%;
+  height: 100%;
+  border: solid;
+  font-size: 18px;
+  border-radius: 20px;
+  border-width: 1px;
 }
