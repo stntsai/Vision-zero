@@ -6,6 +6,29 @@ body {
   padding: 0;
 }
 
+input[type='radio']{
+  accent-color: rgb(30, 29, 29);
+}
+
+.address-input {
+  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+  width: 230px;
+  height: 40px;
+  border: solid;
+  font-size: 18px;
+  border-radius: 15px;
+  margin: 10px 0px 10px;
+  border-width: 1px;
+  position: relative;
+  text-align: justify;
+  padding-left: 20px;
+}
+.address-input:focus {
+  outline: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  
+}
+
 #container {
   height: 100%;
   display: flex;
@@ -24,7 +47,7 @@ body {
 }
 
 #map {
-  margin-top: 3%;
+  margin-top: 0%;
   flex-basis: 0;
   flex-grow: 4;
   height: 100%;
@@ -61,8 +84,6 @@ body {
   height: auto;
 }
 
-
-
 #sidebar {
   flex: 0 1 auto;
   padding: 0;
@@ -71,47 +92,77 @@ body {
   padding: 0.5rem;
 }
 
-#searchButton {
-  background-color: #3f8abe;
-  color: #ffffff;
-  text-align: center;
-
+#travel-mode {
+  color: #635e5e;
 }
 
-#search-card{
+#searchButton {
+  text-align: center;
+  width: 70px;
+  height: 40px;
+  background-color: white;
+  color: black;
+  text-align: center;
+  border: solid;
+  font-size: 18px;
+  border-radius: 15px;
+  border-width: 1px;
+  position: relative;
+  top: 70px;
+  
+}
+
+#searchButton:hover{
+  background-color: #d9d9d9;
+}
+
+#search-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  width:300px;
+  width: 300px;
   height: 400px;
-  padding:5%;
+  padding-left: 30px;
+  padding-top: 40px;
   border-radius: 30px;
   border-style: solid;
   border-width: 2px;
   border-color: black;
   position: absolute;
-  top: 150px;
+  top: 100px;
   left: 5%;
 }
 
-.address-input{
-  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
-  width: 100%;
-  height: 100%;
-  border: solid;
-  font-size: 18px;
-  padding: 5px;
-  border-radius: 20px;
-  border-width: 1px;
+#destination{
+position:relative;
+top:50px;
+}
+#final-line{
   position: relative;
+  top: 90px;
+  color: black;
 }
 
-#searchButton{
-  background-color: #D9D9D9;
-  color: black;
-  text-align: center;
-  width: 200%;
-  height: 100%;
-  border: solid;
-  font-size: 18px;
-  border-radius: 20px;
-  border-width: 1px;
+#downward-arrow{
+  position: absolute;
+  width: 15px;
+  margin-left: 30px;
 }
+
+#exit-demo{
+  position: absolute;
+  width:120px;
+  height:70px;
+  top:100px;
+  right: 100px;
+  color: black;
+  font-size: 20px;
+  background-color: white;
+  border-radius: 15px;
+  border-width: 2px;
+  text-align: center;
+  padding: 5px;
+}
+
+#exit-demo:hover{
+  background-color: #d9d9d9;
+}
+

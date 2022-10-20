@@ -159,31 +159,30 @@
   </head>
 
   <body>
-    <header>
-        <!-- change to test -->
+    <!-- <header>
         <%- include('../partials/nav', { email: email }) %> 
-    </header>
+    </header> -->
 <div id="navigation-app"></div>
 <div id="container">
     <div id="map"></div>
-    <div id="sidebar"></div>
+    <!-- <div id="sidebar"></div> -->
   </div>
  <div class="card" id="search-card">
-    <div class="control" style="left: 16%;top: 2%; color: #635E5E;">
+    <div id="travel-mode">
         <label class="radio">
-            <input type="radio" value="driving" name="mode"  style="margin-right: 8px;" checked>
+            <input type="radio" value="driving" name="mode" style="margin-left: 8px;"checked>
                 Driving
         </label>
         <label class="radio">
-            <input type="radio" value="bicycling" name="mode" style="margin-right: 8px;">
+            <input type="radio" value="bicycling" name="mode" >
                 Bicycling
         </label>
         <label class="radio">
-            <input type="radio" value="transit" name="mode" style="margin-right: 8px;">
+            <input type="radio" value="transit" name="mode" >
                 Transit
         </label>
         <label class="radio">
-            <input type="radio" value="walking" name="mode" style="margin-right: 8px;">
+            <input type="radio" value="walking" name="mode">
                 Walking
         </label>
     </div>
@@ -191,17 +190,12 @@
     <div >
 
         <input id="origin" class="address-input"
-            
                 required type="text" 
                 name="start-point"  
                 placeholder="Origin" 
                 type="text" >
-
-        <!-- <i class="fas fa-arrow-right fas fa-2x" style="padding-top: 15px; 
-                                                        color: #7BB6D9;
-                                                        margin-left: 10px;"></i> -->
-
-
+        <br>
+        <img src="../../../static/downward_arrow.png" id="downward-arrow">
         <input id="destination"
                required type="text" 
                class="address-input"
@@ -209,11 +203,18 @@
                placeholder="Destination"
                 type="text"
                 >
-        <a href="/sign-in" >
-        <a id="searchButton" >
+        <!-- <a href="/sign-in" > -->
+        <button id="searchButton" >
             Go
-        </a>
+        </button>
     </div>
+    <p id="final-line">
+        @ Vision Zero - Crash Data API
+    </p>
+    </div>
+    <div>
+       
+       <a href="/"><button id="exit-demo"> Exit Demo</button></a>
     </div>
     
     </body>
