@@ -50,14 +50,27 @@ app.get("/planner", authMiddleware, async function (req, res) {
 
 let crashHistory = null;
 
-app.get("/route", authMiddleware, async function (req, res) {
+// app.get("/route", authMiddleware, async function (req, res) {
+
+//   const db = admin.firestore();
+//   if (crashHistory) {
+//     res.render("pages/route", { user: req.user, crashHistory:crashHistory});
+//   } else {
+//     UserService.getAllCrashCoordinates(db).then(crashHistory => {
+//       res.render("pages/route", { user: req.user, crashHistory:crashHistory});
+//     })
+//   }
+// });
+
+// Disable login requirement
+app.get("/route", async function (req, res) {
 
   const db = admin.firestore();
   if (crashHistory) {
     res.render("pages/route", { user: req.user, crashHistory:crashHistory});
   } else {
     UserService.getAllCrashCoordinates(db).then(crashHistory => {
-      res.render("pages/route", { user: req.user, crashHistory:crashHistory});
+      res.render("pages/route", { user: req.user, email: "CT@gmail.com", crashHistory:crashHistory});
     })
   }
 });
@@ -192,8 +205,9 @@ app.post('/addProfile', async function(req, res){
 checkoutRoutes(app);
 exports.app = functions.https.onRequest(app);
 
-// app.listen(port);
-// console.log("Server started at http://localhost:" + port);
+app.listen(port);
+
+console.log("Server started at http://localhost:" + port);
 
 
 
