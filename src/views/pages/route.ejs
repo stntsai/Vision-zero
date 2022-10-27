@@ -47,7 +47,7 @@
             };
             console.log(outputCoordinates)
             return outputCoordinates
-    }
+        }
         
         function initMap() {
             const directionsRenderer = new google.maps.DirectionsRenderer();
@@ -165,56 +165,53 @@
 <div id="navigation-app"></div>
 <div id="container">
     <div id="map"></div>
-    <!-- <div id="sidebar"></div> -->
-  </div>
- <div class="card" id="search-card">
-    <div id="travel-mode">
-        <label class="radio">
-            <input type="radio" value="driving" name="mode" style="margin-left: 8px;"checked>
-                Driving
-        </label>
-        <label class="radio">
-            <input type="radio" value="bicycling" name="mode" >
-                Bicycling
-        </label>
-        <label class="radio">
-            <input type="radio" value="transit" name="mode" >
-                Transit
-        </label>
-        <label class="radio">
-            <input type="radio" value="walking" name="mode">
-                Walking
-        </label>
-    </div>
-
-    <div >
-
-        <input id="origin" class="address-input"
+    
+    <div class="card" id="search-card">
+        <div id="travel-mode">
+            <label class="radio">
+                <input type="radio" value="walking" name="mode" checked>
+                    Walking
+            </label>
+            <label class="radio">
+                <input type="radio" value="bicycling" name="mode" >
+                    Bicycling
+            </label>
+            <label class="radio">
+                <input type="radio" value="transit" name="mode" >
+                    Transit
+            </label>
+            <label class="radio">
+                <input type="radio" value="driving" name="mode">
+                    Driving
+            </label>
+        </div>
+        
+        <div id="user-input-area">
+            <input id="origin" class="address-input"
+                    required type="text" 
+                    name="start-point"  
+                    placeholder="Origin" 
+                    type="text" />
+            <div>
+                <img src="../../../static/downward_arrow.png" id="downward-arrow"/>
+            </div>
+            
+            <input id="destination"
                 required type="text" 
-                name="start-point"  
-                placeholder="Origin" 
-                type="text" >
-        <br>
-        <img src="../../../static/downward_arrow.png" id="downward-arrow">
-        <input id="destination"
-               required type="text" 
-               class="address-input"
-               name="destination"  
-               placeholder="Destination"
-                type="text"
-                >
-        <!-- <a href="/sign-in" > -->
-        <button id="searchButton" >
-            Go
-        </button>
-        <label class="checkbox" id="safety-info">
-            <input type="checkbox" value="safety-info" name="safety-info">
-                Safety Info
-        </label>
-    </div>
-    <p id="final-line">
-        @ Vision Zero - Crash Data API
-    </p>
+                class="address-input"
+                name="destination"  
+                placeholder="Destination"
+                    type="text"
+                    />
+
+            <button class="button is-medium is-success is-outlined" style="top:50px; left: 30px" id="searchButton">
+                Go
+            </button>
+        </div>
+
+        <p id="final-line">
+            @ Vision Zero - Crash Data API
+        </p>
     </div>
     <div>
        <a href="/"><button id="exit-demo"> Exit Demo</button></a>
