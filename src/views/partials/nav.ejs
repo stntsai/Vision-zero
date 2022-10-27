@@ -2,7 +2,7 @@
   <div class="container" >
     <div class="navbar-brand">
       <a class="navbar-item" href="/">
-        <h1 class="title" style="color: #FFFFFF; font-weight:bold">VISION ZERO</h1>
+        <h1 class="title" style="color: #FFFFFF; font-weight:bold">VISION ZERO API</h1>
       </a>
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarMenu">
         <span aria-hidden="true"></span>
@@ -22,25 +22,11 @@
                 <h2 style="color: #FFFFFF">MAP DEMO</h2>
               </a>
             </div>
-            <% if(locals.email) { %>
-              <div class="navbar-item">
-                <i style="color: #FFFFFF" class="material-icons">person_outline</i>
-                <a href="/profile" >
-                  <h2 style="color: #FFFFFF"><%= email %></h2>
-                </a>
-              </div>
-              <div class="navbar-item">
-                <a href="/profile-setting">
-                  <h2 style="color: #FFFFFF">SETTING</h2>
-                </a>
-              </div>
-            <% } else { %>
-              <div class="navbar-item">
-                <a href="/sign-in" >
-                  <h2 style="color: #FFFFFF;">LOGIN</h2>
-                </a>
-              </div>
-            <% }%>
+            <div class="navbar-item">
+              <a href="https://vision-zero-api.herokuapp.com/docs#/" target="_blank">
+                <h2 style="color: #FFFFFF">API DOCUMENTATION</h2>
+              </a>
+            </div>
             <div class="navbar-item">
               <a href="/donate" >
                 <h2 style="color: #FFFFFF">DONATE</h2>

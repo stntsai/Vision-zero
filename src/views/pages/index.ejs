@@ -16,22 +16,21 @@
 
 
  
-  <section class="'hero-main hero" style="background-color:#EEF2FF;">
-    <div class="hero-body">
+  <section  class="section is-medium" style="background-color:#EEF2FF">
       <div class="'container">
         <div class="columns">
           <div class="column is-half">
-            <div style="position: relative; top:15%; left:25%">
-              <h1 class="title is-size-1 "> Safe </h1>
-              <h1 class="title is-size-1 "> Traveling</h1>
-              <h1 class="title is-size-1"> Start Now</h1>
-
-              <div class="field is-grouped">
-                <div class="buttons">
-                  <a class="button button-white is-large is-dangerous is-rounded" href="/sign-up"> Sign Up</a>
-                  <a class="button button-white is-large is-outlined is-success is-rounded is-light" sytle="background-color: #0a0a23;" href="/sign-in"> Login </a>
+            <div class="container" style="position: relative; top:20%; left:15%"">
+                <h1 class="title is-size-1 "> Safe </h1>
+                <h1 class="title is-size-1 "> Traveling</h1>
+                <h1 class="title is-size-1"> Start Now</h1>
+                <br>
+                <div class="field is-grouped">
+                  <div class="buttons">
+                      <a class="button button-white is-large is-outlined is-info is-rounded" href="https://vision-zero-api.herokuapp.com/docs#/" target="_blank"> API Documentation </a>
+                      <a class="button button-white is-large is-success is-rounded" href="/route"> Map Demo </a>
+                  </div>
                 </div>
-              </div>
             </div>
           </div>
           <div class="column is-half">
@@ -43,108 +42,75 @@
           </div>
         </div>
       </div>
-    </div>
   </section>
 
-  <section class="section is-medium">
-    <div class="columns is-variable is-8">
-      <div class="column is-full-height">
-        <div class="card" style="background-color:#F7F7F7" >
-          <p class="card-header-icon">
-            <figure class="image is 12x12" style="position: relative; left:10%">
-
-              <img src="../../../static/car_icon.png" style="width: 75px; height:auto;">
-
-            </figure>
-          </p>
-      
-          <div class="card-content">
-            <h1 class="title is-size-5">
-              Daily Safe Travel Tips
-            </h1>
-            <div class="block"></div>
-            <p class="subtitle" style="color:#858482">
-              > 50% of accident-caused pedestrians' injuries happens in intersections. 
+  <section class="hero is-fullheight" id="visionintro"
+    style=
+      'background-image: url("https://erepublic.brightspotcdn.com/dims4/default/9a59f6c/2147483647/strip/true/crop/1000x521+0+146/resize/1680x876!/format/webp/quality/90/?url=http%3A%2F%2Ferepublic-brightspot.s3.amazonaws.com%2F13%2F18%2F23ee7f6840bb9eaa206b1bb99300%2Fshutterstock-788608396.jpg"); 
+      background-repeat: no-repeat;
+      background-position: center; 
+      background-size: cover;'
+      >
+        <div class="hero-body" style="background-color: white; opacity:0.6;">
+          <div class="container has-text-centered" >
+            <p class="title is-size-10" style="color:black; font-weight:800">
+              Our Vision
             </p>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-          </div>
-        </div>
-      </div>
-
-      <div class="column">
-        <div class="card is-full-height" style="background-color:#F7F7F7" >
-          <p class="card-header-icon">
-            <figure class="image is 12x12" style="position: relative; left:10%">
-
-              <img src="../../../static/chat_icon.png" style="width: 75px; height:auto;">
-
-            </figure>
-          </p>
-      
-          <div class="card-content">
-            <h1 class="title is-size-5">
-              Latest News
-            </h1>
-            <div class="block"></div>
-            <p class="subtitle" style="color:#858482">
-              Mayor Adams Urge Albany to Pass Local Control for Traffic Saftey. “No family should have to suffer the loss of loved one to traffic violence, but that’s what can happen when a speeding car drives through a red light,” said Mayor Adams.
-            </p>
-            
-            
-          </div>
-        </div>
-      </div>
-
-      <div class="column">
-        <div class="card is-full-height" style="background-color:#F7F7F7" >
-          <p class="card-header-icon">
-            <figure class="image is 12x12" style="position: relative; left:10%">
-
-              <img src="../../../static/location_icon.png" style="width: 75px; height:auto;">
-
-            </figure>
-          </p>
-      
-          <div class="card-content">
-            <h1 class="title is-size-5">
-              About Vision Zero
-            </h1>
-            <div class="block"></div>
-            <p class="subtitle" style="color:#858482">
-              In the City of New York, we recognize that deaths and serious injuries in traffic are not inevitable "accidents," but preventable crashes that can be ended through engineering, enforcement, and education.
+            <br>
+            <p class="subtitle" style="color:black; font-weight:400">
+              In the City of New York, we recognize that deaths and serious injuries in traffic are not inevitable "accidents", 
+              but preventable crashes that can be ended through engineering, enforcement, and education. 
+              Vision Zero is a movement known internationally that aims to eliminate the number of fatalities and life-threatening injuries in car accidents. 
+              Utilizing the NYPD Car Crashes dataset, our team has built an API for developers who want to make the city's street safer for any kind of road users.
             </p>
           </div>
         </div>
-      </div>
-    </div>
   </section>
 
 
-  <section class="section">
-    <div class="column">
-      <div class="card is-full-height" style="background-color:#F7F7F7" >
-        <div class="card-content">
-          <h1 class="title is-size-5">
-            Project general description
+  <section class="hero is-fullheight" style="background-color:#EEF2FF">
+    <div class="columns">
+      <div class="column is-half">
+        <div class="container" style="padding: 70px 0; left:20px;">
+          <h1 class="title is-size-10" style="font-weight: 700;">
+            About the API
           </h1>
-          <div class="block"></div>
+          <br>
           <p class="subtitle" style="color:#858482">
-            Vision Zero is a movement known internationally that aims to eliminate the number of fatalities and life-threatening injuries in car accidents. Focusing on the traffic conditions in NYC, our team will build an interactive route planning website with enhanced safety features based on NYPD accident statistics. The website will alert all en route dangerous intersections and, possibly, do personalized routing. For example, if one user uses a wheelchair, our routing will avoid intersections that are dangerous to wheelchair users according to historical accident data.         
+            The NYPD Car Crashes dataset contains all of the reports of car accidents happended in New York City. The API we built included the car crashes happend from 2016 to March 2022.
+            This API only includes the crashes that caused injuries. For each row of data, there are geographical data, including latitute and longitude of the crash, the coordinate of the intersection 
+            the crash happened, and the street names; the date, time, and the day of week it happended; and details of the crash like major causes and the category of the road users.
           </p>
-          <br/>
-          <br/>
-
+          <br>
+          <p class="subtitle" style="color:#858482">
+            Using the data from this API, we can create a safty notification map for users to know whether there are dangerous intersections along their iteneraries, so they could avoid them or stay alert.
+            We can also create a data dashboard for the policy makers, using machine learning algorithms and with the integration of other datasets, to find out where in this city could have a high chance of
+            having car crashes in the near future. 
+          </p>
+          <a class="button button-white is-medium is-success is-outlined" href="/route"> Map Demo </a>
+          <br>
+          <br>
+          <p class="subtitle" style="color:#858482">
+            This is a free-to-use API since the NYPD car crashes dataset is free. But please consider to danate to our team for the effort of building this API!
+          </p>
+        </div>
+        
+      </div>
+          
+      <div class="column is-half">
+        <div class="container" >
+          <img src="../../../static/dataanalysis.png" style="width: 700px; height:auto; position: absolute;  top:50px">
+          <img src="../../../static/interactivemap.png" style="width: 700px; height:auto; position: absolute; top:400px;">
         </div>
       </div>
+          
     </div>
   </section>
-  
 </body>
 
 
 <%- include('../partials/footer') %>
 
+
 </html>
+

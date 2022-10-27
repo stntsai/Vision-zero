@@ -75,8 +75,12 @@ app.get("/route", async function (req, res) {
   }
 });
 
-app.get("/donate", authMiddleware, async function (req, res) {
-  res.render("pages/donate", { user: req.user });
+// app.get("/donate", authMiddleware, async function (req, res) {
+//   res.render("pages/donate", { user: req.user });
+// });
+
+app.get("/donate", async function (req, res) {
+  res.render("pages/donate");
 });
 
 app.get("/profile-setting", authMiddleware, async function (req, res) {
