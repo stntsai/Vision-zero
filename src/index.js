@@ -11,6 +11,7 @@ const authMiddleware = require("./app/auth-middleware");
 const checkoutRoutes = require('./app/checkout-routes');
 const UserService = require('./app/user-service');
 const { user } = require("firebase-functions/v1/auth");
+var cors = require('cors');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -24,6 +25,11 @@ app.use(
     extended: true,
   })
 );
+
+app.use(cors({
+  origin: "http://localhost:8000",
+  credentials: true
+}));
 
 // set the view engine to ejs
 app.set("view engine", "ejs");

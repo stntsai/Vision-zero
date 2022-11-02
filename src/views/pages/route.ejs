@@ -12,9 +12,9 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <script>    
-        var data = document.getElementById("crashHistory").dataset.test;
         var map; 
-        
+
+        // Deprecated
         function getNearbyCrashCoordinates(crashHistory, latlngs){
             var window = 0.0007
     
@@ -48,7 +48,7 @@
             console.log(outputCoordinates)
             return outputCoordinates
         }
-        
+
         function initMap() {
             const directionsRenderer = new google.maps.DirectionsRenderer();
             const directionsService = new google.maps.DirectionsService();
@@ -87,67 +87,107 @@
                 modeOption = google.maps.TravelMode.TRANSIT;
             }
 
-            var latlngs;
+            var latlngs; // an array of LatLngs that represent an approximate (smoothed) path of the resulting directions.
             var results;
             directionsService
                 .route({
                     origin: start,
                     destination: end,
                     travelMode: modeOption,
-                })
-                .then((response) => {
-                    directionsRenderer.setDirections(response);
-                    latlngs = JSON.parse(JSON.stringify(response.routes[0]["overview_path"]));
-                    results = getNearbyCrashCoordinates(data, latlngs);
+                }, function(response, status){
+                    if(status== "OK"){
+                        latlngs = JSON.parse(JSON.stringify(response.routes[0]["overview_path"]));
+                        
+                        directionsRenderer.setDirections(response);
+                        if (response.routes && response.routes.length > 0) {
+                            latlngs = response.routes[0].overview_path;
+                            results = getDangerFlagByPoint(latlngs);
+                            console.log('results array=', results)
+                        }
+                        for (let res of results){
+                            /*
+                            var cood = res[0].toString() + ", " + res[1].toString();
 
-                    for (let res of results){
-                        var cood = res[0].toString() + ", " + res[1].toString();
-                        console.log(cood);
-                        var contentString =
-                            '<div id="content">' +
-                            '<div id="siteNotice">' +
-                            "</div>" +
-                            '<h1 id="firstHeading" class="firstHeading">' + cood + '</h1>' +
-                            '<div id="bodyContent">' +
-                            "</div>" +
-                            "</div>";
-
-                        var marker = new google.maps.Marker({  
-                            map: map, 
-                            position: { lat: res[0], lng: res[1] },
-                            icon: new google.maps.MarkerImage('static/exclamation.svg',
-                                                                null, null, null, new google.maps.Size(20,22)),
-                        });
-
-                        map.setCenter(marker.getPosition())
-
-                        var content = '<div id="content">' +
-                            '<div id="siteNotice">' +
-                            "</div>" +
-                            '<h1 id="firstHeading" class="firstHeading">' + cood + '</h1>' +
-                            '<div id="bodyContent">' +
-                            "</div>" +
-                            "</div>";
-
-                        var infowindow = new google.maps.InfoWindow();
-
-                        google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
-                            return function() {
-                            infowindow.setContent(content);
-                            infowindow.open(map,marker);
-                            };
-                        })(marker,content,infowindow)); 
+                            var contentString =
+                                '<div id="content">' +
+                                '<div id="siteNotice">' +
+                                "</div>" +
+                                '<h1 id="firstHeading" class="firstHeading">' + cood + '</h1>' +
+                                '<div id="bodyContent">' +
+                                "</div>" +
+                                "</div>";
+    
+                            var marker = new google.maps.Marker({  
+                                map: map, 
+                                position: { lat: res[0], lng: res[1] },
+                                icon: new google.maps.MarkerImage('static/exclamation.svg',
+                                                                    null, null, null, new google.maps.Size(20,22)),
+                            });
+                            */
+                        }
+                    }else{
+                        if ((start == "") || (end == "")) {
+                            alert("Please enter addresses.");
+                        } else {
+                            alert("Directions request failed");
+                        }
                     }
                 })
-                .catch((e) => {
-                    if ((start == "") || (end == "")) {
-                        alert("Please enter addresses.");
-                    } else {
-                        window.alert("Directions request failed");
-                        console.log(status);
-                    }
-                });
         }
+        
+        async function getDangerFlagByPoint(points){
+            let results= [];
+            // find nearest point in the crash database and get dangerousity score from that api
+            for (let point of points){
+                let lat = point.lat();
+                    lng = point.lng();
+                console.log('try')
+                //await fetch(`https://vision-zero-api.herokuapp.com/positionScore/?latitude=${lat}&longtitude=${lng}`,{
+                await fetch('https://vision-zero-api.herokuapp.com/positionScore/?latitude=-95.6356964&longitude=30.0945726',{
+                    method: 'GET',
+                    headers: {
+                        'Access-Control-Allow-Origin':'*'
+                    }
+                }).then((response)=>{
+                    console.log('res=',response)
+                })
+
+                /*
+                fetch(`https://vision-zero-api.herokuapp.com/positionScore/?longtitude=${lng}&latitude=${lat}`)
+                    .then((response) => {
+                        alert(response.json())
+                        if(response.status == "OK"){
+                            results.append(response.json())
+                        }
+                    })
+                */
+            }
+            return results;
+        };
+
+        function showIntersections(directionResult) {
+            // For each step, place a marker, and add the text to the marker's
+            // info window. Also attach the marker to an array so we
+            // can keep track of it and remove it when calculating new
+            // routes.
+            var myRoute = directionResult.routes[0].legs[0];
+          
+            for (var i = 0; i < myRoute.steps.length; i++) {
+                var marker = new google.maps.Marker({
+                  position: myRoute.steps[i].start_point,
+                  map: map
+                });
+                attachInstructionText(marker, myRoute.steps[i].instructions);
+                markerArray[i] = marker;
+            }
+          }
+          
+          function attachInstructionText(marker, text) {
+            google.maps.event.addListener(marker, 'click', function() {
+              stepDisplay.setContent(text);
+              stepDisplay.open(map, marker);
+            });
+          }
 
         window.initMap = initMap;
     </script>
@@ -159,9 +199,7 @@
   </head>
 
   <body>
-    <!-- <header>
-        <%- include('../partials/nav', { email: email }) %> 
-    </header> -->
+
 <div id="navigation-app"></div>
 <div id="container">
     <div id="map"></div>
@@ -204,7 +242,7 @@
                     type="text"
                     />
 
-            <button class="button is-medium is-success is-outlined" style="top:50px; left: 30px" id="searchButton">
+            <button class="button is-medium is-success is-outlined"  id="searchButton">
                 Go
             </button>
         </div>

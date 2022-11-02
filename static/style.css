@@ -99,25 +99,27 @@ input[type='checkbox']{
   color: #635e5e;
 }
 
-/* #searchButton {
+#searchButton {
   text-align: center;
   width: 70px;
   height: 40px;
   background-color: white;
-  color: black;
+  color: #67f5b5;
   text-align: center;
   border: solid;
   font-size: 18px;
   border-radius: 15px;
   border-width: 1px;
   position: relative;
-  top: 70px;
+  top: 60px;
+  left: 30px;
   
 }
 
 #searchButton:hover{
-  background-color: #d9d9d9;
-} */
+  background-color: #67f5b5;
+  color: gray;
+} 
 
 #search-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
