@@ -12,8 +12,28 @@
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <script>    
-        var map; 
-
+        let map;
+        const dummyResult = [
+            {'coordinates': {'lat':40.71368101252397, 'lng':-74.00664195032594},
+            'cause': "Traffic Control Disregarded",
+            'danger': 6.0},
+            {'coordinates': {'lat':40.71378101252397, 'lng':-74.00664195032594},
+            'cause': "Failure to Yield Right-of-Way",
+            'danger': 1.0},
+            {'coordinates': {'lat':40.71388101252397, 'lng':-74.00664195032594},
+            'cause': "Driver Inattention/Distraction",
+            'danger': 20.0},
+            {'coordinates': {'lat':40.71398101252397, 'lng':-74.00664195032594},
+            'cause': "Unsafe Speed",
+            'danger': 11.0},
+            {'coordinates': {'lat':40.71408101252397, 'lng':-74.00664195032594},
+            'cause': "View Obstructed/Limited",
+            'danger': 3.0},
+            {'coordinates': {'lat':40.71418101252397, 'lng':-74.00664195032594},
+            'cause': "Driver Inattention/Distraction",
+            'danger': 66.0}
+        ]
+                                        
         // Deprecated
         function getNearbyCrashCoordinates(crashHistory, latlngs){
             var window = 0.0007
@@ -53,6 +73,7 @@
             const directionsRenderer = new google.maps.DirectionsRenderer();
             const directionsService = new google.maps.DirectionsService();
             map = new google.maps.Map(document.getElementById("map"), {
+                mapId: 'route_map',
                 zoom: 10,
                 center: { lat: 40.73, lng: -73.94 },
                 disableDefaultUI: true,
@@ -101,30 +122,57 @@
                         directionsRenderer.setDirections(response);
                         if (response.routes && response.routes.length > 0) {
                             latlngs = response.routes[0].overview_path;
-                            results = getDangerFlagByPoint(latlngs);
+                            results = dummyResult || getDangerFlagByPoint(latlngs);
                             console.log('results array=', results)
                         }
-                        for (let res of results){
-                            /*
-                            var cood = res[0].toString() + ", " + res[1].toString();
-
-                            var contentString =
-                                '<div id="content">' +
-                                '<div id="siteNotice">' +
-                                "</div>" +
-                                '<h1 id="firstHeading" class="firstHeading">' + cood + '</h1>' +
-                                '<div id="bodyContent">' +
-                                "</div>" +
-                                "</div>";
-    
-                            var marker = new google.maps.Marker({  
-                                map: map, 
-                                position: { lat: res[0], lng: res[1] },
-                                icon: new google.maps.MarkerImage('static/exclamation.svg',
-                                                                    null, null, null, new google.maps.Size(20,22)),
+                        // todo: draw the marks on map
+                        for (let point of results){
+                            
+                            // todo: interact marker
+                            const advancedMarkerView = new google.maps.marker.AdvancedMarkerView({
+                                map,
+                                content: buildContent(point),
+                                position: { lat: point.coordinates.lat, lng: point.coordinates.lng },
+                                title: point.cause,
                             });
-                            */
+
+                            const element = advancedMarkerView.element;
+                            
+                            const alert = buildContent(point);
+
+
+                            const markerView = new google.maps.marker.AdvancedMarkerView({
+                                map,
+                                position: { lat: point.coordinates.lat, lng: point.coordinates.lng},
+                                content: alert,
+                            });
+                            /*
+                            ["focus", "pointerenter"].forEach((event) => {
+                                element.addEventListener(event, () => {
+                                    highlight(advancedMarkerView, point);
+                                });
+                            });
+                            ["blur", "pointerleave"].forEach((event) => {
+                                element.addEventListener(event, () => {
+                                    unhighlight(advancedMarkerView, point);
+                                });
+                            });*/
+                            var infowindow = new google.maps.InfoWindow();
+                            element.addEventListener("click", () => {
+                                infowindow.setContent(alert);
+                                infowindow.open(map, advancedMarkerView);
+                            });
+                            
                         }
+                            
+                        // todo: onclick showcase info for each notification
+                        /*var infowindow = new google.maps.InfoWindow();
+                        
+                        google.maps.event.addListener(marker, 'click', function(){ 
+                            infowindow.setContent(content);
+                            infowindow.open(map,marker);
+                        })(advancedMarkerView,content,infowindow); */
+
                     }else{
                         if ((start == "") || (end == "")) {
                             alert("Please enter addresses.");
@@ -134,6 +182,31 @@
                     }
                 })
         }
+
+        function highlight(markerView, property) {
+            markerView.content.classList.add("highlight");
+            markerView.element.style.zIndex = 1;
+        }
+          
+        function unhighlight(markerView, property) {
+        markerView.content.classList.remove("highlight");
+        markerView.element.style.zIndex = "";
+        }          
+
+        function buildContent(point) {
+            const content = document.createElement("div");
+          
+            content.classList.add("alert");
+            content.innerHTML = `
+                <div class="details">
+                    <div class="dangerousity">${point.danger}</div>
+                    <div class="coordinate">${point.coordinates}</div>
+                    <div class="cause">${point.cause}</div>
+                    <div class="features">
+                </div>
+              `;
+            return content;
+        }
         
         async function getDangerFlagByPoint(points){
             let results= [];
@@ -141,7 +214,7 @@
             for (let point of points){
                 let lat = point.lat();
                     lng = point.lng();
-                console.log('try')
+
                 //await fetch(`https://vision-zero-api.herokuapp.com/positionScore/?latitude=${lat}&longtitude=${lng}`,{
                 await fetch('https://vision-zero-api.herokuapp.com/positionScore/?latitude=-95.6356964&longitude=30.0945726',{
                     method: 'GET',
@@ -150,49 +223,18 @@
                     }
                 }).then((response)=>{
                     console.log('res=',response)
-                })
+                    results.append(response.json())
+                    // todo: calculate score for this (lat, lng) and store in results
 
-                /*
-                fetch(`https://vision-zero-api.herokuapp.com/positionScore/?longtitude=${lng}&latitude=${lat}`)
-                    .then((response) => {
-                        alert(response.json())
-                        if(response.status == "OK"){
-                            results.append(response.json())
-                        }
-                    })
-                */
+                })
             }
             return results;
         };
 
-        function showIntersections(directionResult) {
-            // For each step, place a marker, and add the text to the marker's
-            // info window. Also attach the marker to an array so we
-            // can keep track of it and remove it when calculating new
-            // routes.
-            var myRoute = directionResult.routes[0].legs[0];
-          
-            for (var i = 0; i < myRoute.steps.length; i++) {
-                var marker = new google.maps.Marker({
-                  position: myRoute.steps[i].start_point,
-                  map: map
-                });
-                attachInstructionText(marker, myRoute.steps[i].instructions);
-                markerArray[i] = marker;
-            }
-          }
-          
-          function attachInstructionText(marker, text) {
-            google.maps.event.addListener(marker, 'click', function() {
-              stepDisplay.setContent(text);
-              stepDisplay.open(map, marker);
-            });
-          }
-
         window.initMap = initMap;
     </script>
     <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChvBupfwisVPAWC7pJOS-RlKAuWjrLymw&callback=initMap"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChvBupfwisVPAWC7pJOS-RlKAuWjrLymw&callback=initMap&v=beta&libraries=marker"
     >
         initMap()
     </script>
@@ -200,8 +242,8 @@
 
   <body>
 
-<div id="navigation-app"></div>
-<div id="container">
+    <div id="navigation-app"></div>
+    <div id="container">
     <div id="map"></div>
     
     <div class="card" id="search-card">
