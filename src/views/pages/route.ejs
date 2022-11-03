@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" style="height:100%"
->
+<html lang="en" style="height:100%">
   <head>
     <div id="crashHistory" data-test= <%=crashHistory%> type="hidden"></div>
     <%- include('../partials/head') %>
@@ -10,65 +9,28 @@
     <title>Directions Service</title>
     
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
-
+    <script src="https://kit.fontawesome.com/b698efa5cd.js" crossorigin="anonymous"></script>
     <script>    
         let map;
         const dummyResult = [
-            {'coordinates': [40.71378101252397,-74.00664195032594],
-            'cause': "Traffic Control Disregarded",
-            'danger': 6.0},
-            {'coordinates': [40.71388101252397,-74.00664195032594],
-            'cause': "Failure to Yield Right-of-Way",
-            'danger': 1.0},
-            {'coordinates': [40.71398101252397,-74.00664195032594],
-            'cause': "Driver Inattention/Distraction",
-            'danger': 20.0},
-            {'coordinates': [40.71368101252397,-74.00664195032594],
-            'cause': "Unsafe Speed",
-            'danger': 11.0},
-            {'coordinates': [40.71408101252397,-74.00664195032594],
-            'cause': "View Obstructed/Limited",
-            'danger': 3.0},
-            {'coordinates': [40.71418101252397,-74.00664195032594],
-            'cause': "Driver Inattention/Distraction",
-            'danger': 66.0}
+            {'intersection': 'Main Street and Roosevelt Island Bridge',
+            'coordinates': [40.764098201088665, -73.94771592778356],
+            'CONTRIBUTING FACTOR VEHICLE 1': "[Failure to Yield Right-of-Way]",
+            'casualties_count': 16.0},
+            {'intersection': 'Vernon Blvd and 36 Ave',
+            'coordinates': [40.76201169857319, -73.94247175715915],
+            'CONTRIBUTING FACTOR VEHICLE 1': "[Traffic Control Disregarded]",
+            'casualties_count': 3.0},
+            {'intersection': '40th Ave and Cresent St',
+            'coordinates': [40.753490477639915, -73.93797082991887],
+            'CONTRIBUTING FACTOR VEHICLE 1': "[Driver Inattention/Distraction]",
+            'casualties_count': 31.0},
+            {'intersection': 'Cresent St and Queens Plaza N',
+            'coordinates': [40.75098898436325, -73.94028233511814],
+            'CONTRIBUTING FACTOR VEHICLE 1': "[View Obstructed/Limited]",
+            'casualties_count': 22.0},
         ]
                                         
-        // Deprecated
-        function getNearbyCrashCoordinates(crashHistory, latlngs){
-            var window = 0.0007
-    
-            var routeCoordinates =[]
-            var outputCoordinates = []
-
-            
-            var crash_history = [];
-            var crashHistory_str = crashHistory.split(",");
-            for (let i = 0; i < crashHistory_str.length; i += 2) {
-                crash_history.push([parseFloat(crashHistory_str[i]), parseFloat(crashHistory_str[i+1])])
-            }
-            
-            latlngs.forEach(element => {
-                routeCoordinates.push([element.lat, element.lng])
-            });
-
-            outerloop:
-            for (let crashPoint of crash_history){
-                innerloop:
-                for (let routePoint of routeCoordinates){
-                    if((crashPoint[0] <= (routePoint[0]+ window)) && (crashPoint[0] >= routePoint[0]- window)){
-                        if((crashPoint[1] <= routePoint[1]+ window) && (crashPoint[1] >= routePoint[1] - window)){
-                            // outputCoordinates.indexOf(crashPoint) === -1 ? outputCoordinates.push(crashPoint) : console.log()
-                            outputCoordinates.push(crashPoint);
-                            break innerloop;
-                        };  
-                    };  
-                };
-            };
-            console.log(outputCoordinates)
-            return outputCoordinates
-        }
-
         function initMap() {
             const directionsRenderer = new google.maps.DirectionsRenderer();
             const directionsService = new google.maps.DirectionsService();
@@ -89,11 +51,13 @@
             const onChangeHandler = function () {
                 calculateAndDisplayRoute(directionsService, directionsRenderer);
             };
-
-            document.getElementById("searchButton").addEventListener("click", onChangeHandler);
+            
+            searchButton = document.getElementById('searchButton')
+            searchButton.addEventListener("click", onChangeHandler);
         }
 
         function calculateAndDisplayRoute(directionsService, directionsRenderer) {
+            document.getElementById('loading').style.display = 'block';
             const mode = document.querySelector('input[name="mode"]:checked').value;
             const start = document.getElementById("origin").value;
             const end = document.getElementById("destination").value;
@@ -110,66 +74,98 @@
 
             var latlngs; // an array of LatLngs that represent an approximate (smoothed) path of the resulting directions.
             var results;
+
             directionsService
-                .route({
-                    origin: start,
-                    destination: end,
-                    travelMode: modeOption,
-                }, async function(response, status){
-                    if(status== "OK"){
-                        latlngs = JSON.parse(JSON.stringify(response.routes[0]["overview_path"]));
-                        
-                        directionsRenderer.setDirections(response);
+            .route({
+                origin: start,
+                destination: end,
+                travelMode: modeOption,
+            }, async function(response, status){
+                if(status== "OK"){
+                    latlngs = JSON.parse(JSON.stringify(response.routes[0]["overview_path"]));
+                    
+                    try{
                         if (response.routes && response.routes.length > 0) {
                             latlngs = response.routes[0].overview_path;
                             results = await getDangerFlagByPoint(latlngs);
                             console.log('results array=', results)
                         }
-                        // todo: draw the marks on map
+                        // draw the marks on map
                         for (let point of results){
-                            
-                            // todo: interact marker
+                            const content = buildContent(point);
                             const advancedMarkerView = new google.maps.marker.AdvancedMarkerView({
                                 map,
-                                content: buildContent(point),
-                                position: { lat: point.coordinates[0], lng: point.coordinates[1]},
-                                title: point.cause,
+                                content,
+                                position: { lat: point.coordinates[1], lng: point.coordinates[0]},
+                                title: point.cause
                             });
-
+    
                             const element = advancedMarkerView.element;
-                            const alert = buildContent(point);
-
-                            const markerView = new google.maps.marker.AdvancedMarkerView({
-                                map,
-                                position: { lat: point.coordinates.lat, lng: point.coordinates.lng},
-                                content: alert,
+                            ["focus", "pointerenter"].forEach((event) => {
+                                element.addEventListener(event, () => {
+                                    highlight(advancedMarkerView, point);
+                                });
                             });
-
-                            var infowindow = new google.maps.InfoWindow();
-                            element.addEventListener("click", () => {
-                                infowindow.setContent(alert);
-                                infowindow.open(map, advancedMarkerView);
-                            });   
+                            ["blur", "pointerleave"].forEach((event) => {
+                                element.addEventListener(event, () => {
+                                    unhighlight(advancedMarkerView, point);
+                                });
+                            });
+                            advancedMarkerView.addListener("click", (event) => {
+                                unhighlight(advancedMarkerView, point);
+                            });
                         }
-                    }else{
-                        if ((start == "") || (end == "")) {
-                            alert("Please enter addresses.");
-                        } else {
-                            alert("Directions request failed");
-                        }
+                    }catch(e){
+                        console.log(e)
+                    }finally{
+                        directionsRenderer.setDirections(response);
+                        document.getElementById('loading').style.display = 'none';
                     }
-                })
+                    
+                }else{
+                    if ((start == "") || (end == "")) {
+                        alert("Please enter addresses.");
+                    } else {
+                        alert("Directions request failed");
+                    }
+                }
+            })
         }      
 
-        function buildContent(point) {
-            const content = document.createElement("div");
+        function highlight(markerView, property) {
+            markerView.content.classList.add("highlight");
+            markerView.element.style.zIndex = 1;
+        }
           
-            content.classList.add("alert");
+        function unhighlight(markerView, property) {
+            markerView.content.classList.remove("highlight");
+            markerView.element.style.zIndex = "";
+        }
+
+        function buildContent(point) {
+            let dangerousity
+            let cause = point['CONTRIBUTING FACTOR VEHICLE 1'].slice(1,-1).split(',')[0]
+            
+            if (point.casualties_count >= 30){
+                dangerousity = 'most-dangerous'
+            } else if (point.casualties_count >=20){
+                dangerousity = 'very-dangerous'
+            } else if (point.casualties_count >=10){
+                dangerousity = 'somewhat-dangerous'
+            } else {
+                dangerousity = 'slightly-dangerous'
+            }
+            const content = document.createElement("div");
+            
+            content.classList.add("notification");
             content.innerHTML = `
+                <div class="icon">
+                    <i aria-hidden="true" class="fa fa-icon fa-duotone fa-car-burst ${dangerousity}"></i>
+                </div>
                 <div class="details">
-                    <div class="dangerousity">${point.casualties_count}</div>
-                    <div class="coordinate">${point.coordinates}</div>
-                    <div class="cause">${point['CONTRIBUTING FACTOR VEHICLE 1']}</div>
+                    <div class="intersection">${point.intersection == 'undefined'? '': point.intersection}</div>
+                    <div class="dangerousity">${point.casualties_count} Wounded/ Killed</div>
+                    <div class="cause">Main Cause: ${cause=='Undefined'?'':cause}</div>
                     <div class="features">
                 </div>
               `;
@@ -184,7 +180,6 @@
                     lng = point.lng();
 
                 await fetch(`https://vision-zero-api.herokuapp.com/positionScore/?latitude=${lat}&longitude=${lng}`,{
-                //await fetch('https://vision-zero-api.herokuapp.com/positionScore/?latitude=-95.6356964&longitude=30.0945726',{
                     method: 'GET',
                     headers: {
                         'Access-Control-Allow-Origin':'*'
@@ -192,8 +187,7 @@
                 })
                 .then((response)=> response.json())
                 .then((data) => {
-                    console.log('res=', data)
-                    if(data){
+                    if(data && data.length >0){
                         results.push(data[0])
                     };
                 });
@@ -202,6 +196,7 @@
         };
 
         window.initMap = initMap;
+
     </script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChvBupfwisVPAWC7pJOS-RlKAuWjrLymw&callback=initMap&v=beta&libraries=marker"
@@ -214,9 +209,15 @@
 
     <div id="navigation-app"></div>
     <div id="container">
-    <div id="map"></div>
-    
-    <div class="card" id="search-card">
+        <div id="loading">
+            <div class="loading-content">
+                Fetching the API...  
+                <br>
+                <i class="fa-solid fa-spinner fa-spin"></i>
+            </div>
+        </div>
+        <div id="map"></div>
+        <div class="card" id="search-card">
         <div id="travel-mode">
             <label class="radio">
                 <input type="radio" value="walking" name="mode" checked>
@@ -268,12 +269,5 @@
     </div>
     
     </body>
-    <!-- 
-     The `defer` attribute causes the callback to execute after the full HTML
-     document has been parsed. For non-blocking uses, avoiding race conditions,
-     and consistent behavior across browsers, consider loading using Promises
-     with https://www.npmjs.com/package/@googlemaps/js-api-loader.
-    -->
-
   <%- include('../partials/footer') %>
 </html>
