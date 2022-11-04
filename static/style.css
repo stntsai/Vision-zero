@@ -312,5 +312,9 @@ top:50px;
 }
 
 .loading-content{
-  margin-top: 40%;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
