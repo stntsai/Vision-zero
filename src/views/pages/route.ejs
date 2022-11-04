@@ -12,6 +12,7 @@
     <script src="https://kit.fontawesome.com/b698efa5cd.js" crossorigin="anonymous"></script>
     <script>    
         let map;
+        let markers = [];
         const dummyResult = [
             {'intersection': 'Main Street and Roosevelt Island Bridge',
             'coordinates': [40.764098201088665, -73.94771592778356],
@@ -49,12 +50,41 @@
             map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
 
             const onChangeHandler = function () {
+                clearMarkers(markers);
                 calculateAndDisplayRoute(directionsService, directionsRenderer);
             };
             
             searchButton = document.getElementById('searchButton')
             searchButton.addEventListener("click", onChangeHandler);
         }
+        
+        function clearMarkers(markers){
+            for(i=0; i<markers.length; i++){
+                markers[i][0].map=null;
+            }
+        }
+
+        function createMarkers(markers){
+            for (let i=0; i<markers.length;i++){
+                points = markers[i]
+                let advancedMarkerView = points[0]
+                let point = points[1]
+                const element = advancedMarkerView.element;
+                ["focus", "pointerenter"].forEach((event) => {
+                    element.addEventListener(event, () => {
+                        highlight(advancedMarkerView, point);
+                    });
+                });
+                ["blur", "pointerleave"].forEach((event) => {
+                    element.addEventListener(event, () => {
+                        unhighlight(advancedMarkerView, point);
+                    });
+                });
+                advancedMarkerView.addListener("click", (event) => {
+                    unhighlight(advancedMarkerView, point);
+                });
+            }
+        };
 
         function calculateAndDisplayRoute(directionsService, directionsRenderer) {
             document.getElementById('loading').style.display = 'block';
@@ -73,7 +103,7 @@
             }
 
             var latlngs; // an array of LatLngs that represent an approximate (smoothed) path of the resulting directions.
-            var results;
+            let results;
 
             directionsService
             .route({
@@ -99,22 +129,9 @@
                                 position: { lat: point.coordinates[1], lng: point.coordinates[0]},
                                 title: point.cause
                             });
-    
-                            const element = advancedMarkerView.element;
-                            ["focus", "pointerenter"].forEach((event) => {
-                                element.addEventListener(event, () => {
-                                    highlight(advancedMarkerView, point);
-                                });
-                            });
-                            ["blur", "pointerleave"].forEach((event) => {
-                                element.addEventListener(event, () => {
-                                    unhighlight(advancedMarkerView, point);
-                                });
-                            });
-                            advancedMarkerView.addListener("click", (event) => {
-                                unhighlight(advancedMarkerView, point);
-                            });
+                            markers.push([advancedMarkerView,point])
                         }
+                        createMarkers(markers);
                     }catch(e){
                         console.log(e)
                     }finally{
@@ -123,6 +140,7 @@
                     }
                     
                 }else{
+                    document.getElementById('loading').style.display = 'none';
                     if ((start == "") || (end == "")) {
                         alert("Please enter addresses.");
                     } else {
@@ -144,8 +162,8 @@
 
         function buildContent(point) {
             let dangerousity
-            let cause = point['CONTRIBUTING FACTOR VEHICLE 1'].slice(1,-1).split(',')[0]
-            
+            let cause = point['contributing_factor'].slice(1,-1).split(',')[0]
+
             if (point.casualties_count >= 30){
                 dangerousity = 'most-dangerous'
             } else if (point.casualties_count >=20){

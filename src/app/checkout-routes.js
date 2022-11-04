@@ -4,8 +4,7 @@ const ENDPOINT_SECRET = STRIPE_KEY['ENDPOINT_SECRET'];
 const authMiddleware = require('./auth-middleware');
 
 module.exports = (app) => {
-    app.post('/checkout/:planName', authMiddleware, async (req, res) => {
-        const user = req.user;
+    app.post('/checkout/:planName', async (req, res) => {
         let amount = 0
         if (req.body.amount[1] == ""){
             amount = parseInt(req.body.amount[0].replaceAll('.',''))
@@ -28,7 +27,7 @@ module.exports = (app) => {
             mode: 'payment',
             success_url: 'http://localhost:5004/route',
             cancel_url: 'http://localhost:5004/donate',
-            client_reference_id: user.sub,
+            client_reference_id: 'test',
         });
         res.redirect(session.url)
     })

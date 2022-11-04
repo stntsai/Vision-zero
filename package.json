@@ -1,12 +1,12 @@
 {
-  "name": "vision-zero",
-  "version": "1.0.0",
+  "name": "vision-zero-api",
+  "version": "2.0.0",
   "description": "Refer to the assignment for most of the details of the project",
   "main": "src/index.js",
   "scripts": {
     "start": "nodemon src/index.js"
   },
-  "author": "",
+  "author": "Cornell Tech Vision Zero Team",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.1",
