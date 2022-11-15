@@ -67,7 +67,7 @@ input[type='checkbox']{
   padding: 5px;
   border: 1px solid #999;
   text-align: center;
-  font-family: "Roboto", "sans-serif";
+  font-family: "Titillium Web", "sans-serif";
   line-height: 30px;
   padding-left: 10px;
 }
@@ -125,7 +125,7 @@ input[type='checkbox']{
 #search-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   width: 400px;
-  height: 280px;
+  height: 360px;
   padding-left: 30px;
   padding-top: 20px;
   border-radius: 30px;
@@ -137,14 +137,20 @@ input[type='checkbox']{
   left: 5%;
 }
 
+#danger-score-function{
+  position: relative;
+  top: 60px;
+}
+
 #destination{
-position:relative;
-top:50px;
+  position:relative;
+  top:50px;
 }
 #final-line{
   position: relative;
-  top: 60px;
+  top: 80px;
   color: grey;
+  font-size: smaller;
 }
 
 #downward-arrow{

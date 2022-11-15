@@ -213,9 +213,9 @@ app.post('/addProfile', async function(req, res){
 checkoutRoutes(app);
 exports.app = functions.https.onRequest(app);
 
-app.listen(port);
+// app.listen(port);
 
-console.log("Server started at http://localhost:" + port);
+// console.log("Server started at http://localhost:" + port);
 
 
 

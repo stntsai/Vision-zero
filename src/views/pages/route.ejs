@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" style="height:100%">
   <head>
+    <link rel="icon" type="image/svg+xml" href="static/favicon.svg" />
     <div id="crashHistory" data-test= <%=crashHistory%> type="hidden"></div>
     <%- include('../partials/head') %>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
@@ -13,22 +14,24 @@
     <script>    
         let map;
         let markers = [];
+        let records = [];
+
         const dummyResult = [
             {'intersection': 'Main Street and Roosevelt Island Bridge',
-            'coordinates': [40.764098201088665, -73.94771592778356],
-            'CONTRIBUTING FACTOR VEHICLE 1': "[Failure to Yield Right-of-Way]",
+            'coordinates': [-74.0086487, 40.707349],
+            'contributing_factor': "[Failure to Yield Right-of-Way]",
             'casualties_count': 16.0},
             {'intersection': 'Vernon Blvd and 36 Ave',
-            'coordinates': [40.76201169857319, -73.94247175715915],
-            'CONTRIBUTING FACTOR VEHICLE 1': "[Traffic Control Disregarded]",
+            'coordinates': [-74.0086487, 40.708349],
+            'contributing_factor': "[Traffic Control Disregarded]",
             'casualties_count': 3.0},
             {'intersection': '40th Ave and Cresent St',
-            'coordinates': [40.753490477639915, -73.93797082991887],
-            'CONTRIBUTING FACTOR VEHICLE 1': "[Driver Inattention/Distraction]",
+            'coordinates': [-74.089487, 40.707349],
+            'contributing_factor': "[Driver Inattention/Distraction]",
             'casualties_count': 31.0},
             {'intersection': 'Cresent St and Queens Plaza N',
-            'coordinates': [40.75098898436325, -73.94028233511814],
-            'CONTRIBUTING FACTOR VEHICLE 1': "[View Obstructed/Limited]",
+            'coordinates': [-74.0085487, 40.707749],
+            'contributing_factor': "[View Obstructed/Limited]",
             'casualties_count': 22.0},
         ]
                                         
@@ -36,7 +39,7 @@
             const directionsRenderer = new google.maps.DirectionsRenderer();
             const directionsService = new google.maps.DirectionsService();
             map = new google.maps.Map(document.getElementById("map"), {
-                mapId: 'route_map',
+                mapId: '4504f8b37365c3d0',
                 zoom: 10,
                 center: { lat: 40.73, lng: -73.94 },
                 disableDefaultUI: true,
@@ -51,6 +54,7 @@
 
             const onChangeHandler = function () {
                 clearMarkers(markers);
+                clearRecords(records);
                 calculateAndDisplayRoute(directionsService, directionsRenderer);
             };
             
@@ -85,6 +89,12 @@
                 });
             }
         };
+        
+        function clearRecords(records){
+            for(i=0; i<records.length; i++){
+                records[i].setMap(null);
+            }
+        }
 
         function calculateAndDisplayRoute(directionsService, directionsRenderer) {
             document.getElementById('loading').style.display = 'block';
@@ -92,10 +102,10 @@
             const start = document.getElementById("origin").value;
             const end = document.getElementById("destination").value;
             
-            var modeOption = google.maps.TravelMode.DRIVING;
+            var modeOption = google.maps.TravelMode.WALKING;
 
-            if (mode == "walking"){
-                modeOption = google.maps.TravelMode.WALKING;
+            if (mode == "driving"){
+                modeOption = google.maps.TravelMode.DRIVING;
             } else if (mode == "bicycling") {
                 modeOption = google.maps.TravelMode.BICYCLING;
             } else if (mode == "transit") {
@@ -110,35 +120,70 @@
                 origin: start,
                 destination: end,
                 travelMode: modeOption,
+                provideRouteAlternatives: true
             }, async function(response, status){
                 if(status== "OK"){
-                    latlngs = JSON.parse(JSON.stringify(response.routes[0]["overview_path"]));
-                    
-                    try{
-                        if (response.routes && response.routes.length > 0) {
-                            latlngs = response.routes[0].overview_path;
-                            results = await getDangerFlagByPoint(latlngs);
-                            console.log('results array=', results)
-                        }
-                        // draw the marks on map
-                        for (let point of results){
-                            const content = buildContent(point);
-                            const advancedMarkerView = new google.maps.marker.AdvancedMarkerView({
+                    let points, mid_point, dangerScore
+                    for(let i=0; i<response.routes.length; i++){
+                        try{
+                            if (response.routes && response.routes.length > 0) {
+                                latlngs = response.routes[i].overview_path;
+                                results = await getDangerFlagByPoint(latlngs);
+                                points = results[0]
+                                mid_point = latlngs.length % 2 !== 0 ? latlngs[(latlngs.length-1)/2] : latlngs[latlngs.length/2]
+                                dangerScore = results[1]/points.length
+                            }
+                            // draw the marks on map
+                            for (let point of points){
+                                if (point.casualties_count >= 10){
+                                    const content = buildContent(point);
+                                    const advancedMarkerView = new google.maps.marker.AdvancedMarkerView({
+                                        map,
+                                        content,
+                                        position: { lat: point.coordinates[1], lng: point.coordinates[0]},
+                                        title: point.cause
+                                    });
+                                    markers.push([advancedMarkerView,point])
+                                }
+                            }
+                            createMarkers(markers);
+                        }catch(e){
+                            console.log(e)
+                        }finally{
+                            let lineColor;
+                            if (dangerScore >= 30){
+                                lineColor='#df3737'
+                            } else if (dangerScore >= 20){
+                                lineColor='#df9131'
+                            } else if (dangerScore >= 10){
+                                lineColor='#e2d007'
+                            } else{
+                                lineColor='#a3e66a'
+                            }
+
+                            // danger score of the route
+                            let infoWindow = new google.maps.InfoWindow({
                                 map,
-                                content,
-                                position: { lat: point.coordinates[1], lng: point.coordinates[0]},
-                                title: point.cause
+                                content: `<div>Overall danger score = ${dangerScore.toFixed(2)}</div>`,
+                                position:{ lat: mid_point.lat(), lng: mid_point.lng() },
                             });
-                            markers.push([advancedMarkerView,point])
+                            
+                            // render the route
+                            let route = new google.maps.DirectionsRenderer({
+                                map,
+                                directions: response,
+                                routeIndex: i,
+                                polylineOptions: {
+                                    strokeColor: lineColor,
+                                    strokeWeight: 5
+                                }
+                            })
+                            
+                            records.push(infoWindow)
+                            records.push(route)
                         }
-                        createMarkers(markers);
-                    }catch(e){
-                        console.log(e)
-                    }finally{
-                        directionsRenderer.setDirections(response);
-                        document.getElementById('loading').style.display = 'none';
                     }
-                    
+                    document.getElementById('loading').style.display = 'none';
                 }else{
                     document.getElementById('loading').style.display = 'none';
                     if ((start == "") || (end == "")) {
@@ -152,26 +197,42 @@
 
         function highlight(markerView, property) {
             markerView.content.classList.add("highlight");
-            markerView.element.style.zIndex = 1;
+            markerView.element.style.zIndex = 5;
         }
           
         function unhighlight(markerView, property) {
             markerView.content.classList.remove("highlight");
-            markerView.element.style.zIndex = "";
+            markerView.element.style.zIndex = 3;
+        }
+
+        function findMaxOccurence(array) {
+            var modeMap = {};
+            var maxEl = array[0], maxCount = 1;
+            for(var i = 0; i < array.length; i++){
+                var el = array[i];
+                if(modeMap[el] == null)
+                    modeMap[el] = 1;
+                else
+                    modeMap[el]++;  
+                if(modeMap[el] > maxCount){
+                    maxEl = el;
+                    maxCount = modeMap[el];
+                }
+            }
+            return maxEl;
         }
 
         function buildContent(point) {
             let dangerousity
-            let cause = point['contributing_factor'].slice(1,-1).split(',')[0]
+            let counter = {}
+            let cause = findMaxOccurence(point['contributing_factor'].slice(1,-1).split(','))
 
-            if (point.casualties_count >= 30){
+            if (point.casualties_count >= 50){
                 dangerousity = 'most-dangerous'
-            } else if (point.casualties_count >=20){
+            } else if (point.casualties_count >=30){
                 dangerousity = 'very-dangerous'
             } else if (point.casualties_count >=10){
                 dangerousity = 'somewhat-dangerous'
-            } else {
-                dangerousity = 'slightly-dangerous'
             }
             const content = document.createElement("div");
             
@@ -183,7 +244,7 @@
                 <div class="details">
                     <div class="intersection">${point.intersection == 'undefined'? '': point.intersection}</div>
                     <div class="dangerousity">${point.casualties_count} Wounded/ Killed</div>
-                    <div class="cause">Main Cause: ${cause=='Undefined'?'':cause}</div>
+                    <div class="cause">Main Cause: ${cause==='Unspecified'?'':cause}</div>
                     <div class="features">
                 </div>
               `;
@@ -192,6 +253,7 @@
         
         async function getDangerFlagByPoint(points){
             let results= [];
+            let dangerScore = 0
             // find nearest point in the crash database and get dangerousity score from that api
             for (let point of points){
                 let lat = point.lat();
@@ -207,10 +269,11 @@
                 .then((data) => {
                     if(data && data.length >0){
                         results.push(data[0])
+                        dangerScore += data[0].casualties_count
                     };
                 });
             }
-            return results;
+            return [results, dangerScore];
         };
 
         window.initMap = initMap;
@@ -276,6 +339,10 @@
             <button class="button is-medium is-success is-outlined"  id="searchButton">
                 Go
             </button>
+        </div>
+        <div id="danger-score-function">
+            <p><b> How to calculate danger score?</b></p>
+            <p> total crashes along that route in the past 5 years / total distance traveled</p>
         </div>
 
         <p id="final-line">
