@@ -13,28 +13,13 @@
     <script src="https://kit.fontawesome.com/b698efa5cd.js" crossorigin="anonymous"></script>
     <script>    
         let map;
-        let markers = [];
-        let records = [];
-
-        const dummyResult = [
-            {'intersection': 'Main Street and Roosevelt Island Bridge',
-            'coordinates': [-74.0086487, 40.707349],
-            'contributing_factor': "[Failure to Yield Right-of-Way]",
-            'casualties_count': 16.0},
-            {'intersection': 'Vernon Blvd and 36 Ave',
-            'coordinates': [-74.0086487, 40.708349],
-            'contributing_factor': "[Traffic Control Disregarded]",
-            'casualties_count': 3.0},
-            {'intersection': '40th Ave and Cresent St',
-            'coordinates': [-74.089487, 40.707349],
-            'contributing_factor': "[Driver Inattention/Distraction]",
-            'casualties_count': 31.0},
-            {'intersection': 'Cresent St and Queens Plaza N',
-            'coordinates': [-74.0085487, 40.707749],
-            'contributing_factor': "[View Obstructed/Limited]",
-            'casualties_count': 22.0},
-        ]
-                                        
+        let routes = [];
+        let polylineOptions = {
+            strokeColor: 'grey',
+            strokeOpacity: 0.5,
+            strokeWeight: 5
+        };
+           
         function initMap() {
             const directionsRenderer = new google.maps.DirectionsRenderer();
             const directionsService = new google.maps.DirectionsService();
@@ -53,19 +38,12 @@
             map.controls[google.maps.ControlPosition.TOP_CENTER].push(control);
 
             const onChangeHandler = function () {
-                clearMarkers(markers);
-                clearRecords(records);
+                clearResults(routes)
                 calculateAndDisplayRoute(directionsService, directionsRenderer);
             };
             
             searchButton = document.getElementById('searchButton')
             searchButton.addEventListener("click", onChangeHandler);
-        }
-        
-        function clearMarkers(markers){
-            for(i=0; i<markers.length; i++){
-                markers[i][0].map=null;
-            }
         }
 
         function createMarkers(markers){
@@ -90,10 +68,17 @@
             }
         };
         
-        function clearRecords(records){
-            for(i=0; i<records.length; i++){
-                records[i].setMap(null);
+        function clearResults(results){
+            for(let route of results){
+                route.start_marker.setMap(null);
+                route.end_marker.setMap(null);
+                route.infoWindow.setMap(null);
+                route.polyline.setMap(null);
+                for(marker of route.alert_markers){
+                    marker[0].map=null
+                }
             }
+            routes = []
         }
 
         function calculateAndDisplayRoute(directionsService, directionsRenderer) {
@@ -123,8 +108,9 @@
                 provideRouteAlternatives: true
             }, async function(response, status){
                 if(status== "OK"){
-                    let points, mid_point, dangerScore
+                    let points, mid_point, dangerScore, default_route, min_danger_score=Infinity
                     for(let i=0; i<response.routes.length; i++){
+                        let alert_markers = []
                         try{
                             if (response.routes && response.routes.length > 0) {
                                 latlngs = response.routes[i].overview_path;
@@ -138,51 +124,27 @@
                                 if (point.casualties_count >= 10){
                                     const content = buildContent(point);
                                     const advancedMarkerView = new google.maps.marker.AdvancedMarkerView({
-                                        map,
                                         content,
                                         position: { lat: point.coordinates[1], lng: point.coordinates[0]},
                                         title: point.cause
                                     });
-                                    markers.push([advancedMarkerView,point])
+                                    alert_markers.push([advancedMarkerView,point])
                                 }
                             }
-                            createMarkers(markers);
+                            createMarkers(alert_markers);
                         }catch(e){
                             console.log(e)
                         }finally{
-                            let lineColor;
-                            if (dangerScore >= 30){
-                                lineColor='#df3737'
-                            } else if (dangerScore >= 20){
-                                lineColor='#df9131'
-                            } else if (dangerScore >= 10){
-                                lineColor='#e2d007'
-                            } else{
-                                lineColor='#a3e66a'
-                            }
-
-                            // danger score of the route
                             let infoWindow = new google.maps.InfoWindow({
-                                map,
-                                content: `<div>Overall danger score = ${dangerScore.toFixed(2)}</div>`,
+                                content: `<div id=danger-score-window>Overall danger score = ${dangerScore.toFixed(2)}</div>`,
                                 position:{ lat: mid_point.lat(), lng: mid_point.lng() },
                             });
                             
-                            // render the route
-                            let route = new google.maps.DirectionsRenderer({
-                                map,
-                                directions: response,
-                                routeIndex: i,
-                                polylineOptions: {
-                                    strokeColor: lineColor,
-                                    strokeWeight: 5
-                                }
-                            })
-                            
-                            records.push(infoWindow)
-                            records.push(route)
+                            route = renderDirectionsPolylines(response.routes[i].legs, alert_markers, infoWindow, dangerScore)
+                            if (dangerScore < min_danger_score) default_route = route, min_danger_score=dangerScore;
                         }
                     }
+                    highlightRoute(default_route)
                     document.getElementById('loading').style.display = 'none';
                 }else{
                     document.getElementById('loading').style.display = 'none';
@@ -195,6 +157,76 @@
             })
         }      
 
+        function renderDirectionsPolylines(legs, alert_markers, infoWindow, dangerScore) {
+            var stepPolyline = new google.maps.Polyline(polylineOptions);
+            let bounds = new google.maps.LatLngBounds();
+            for (i = 0; i < legs.length; i++) {
+                var steps = legs[i].steps;
+                var startmarker = new google.maps.Marker({
+                    position: {lat: legs[i].start_location.lat(), lng: legs[i].start_location.lng()},
+                    label: 'A'
+                });
+                var endmarker = new google.maps.Marker({
+                    position: {lat: legs[i].end_location.lat(), lng: legs[i].end_location.lng()},
+                    label: 'B'
+                });
+                for (j = 0; j < steps.length; j++) {
+                    var nextSegment = steps[j].path;
+                    for (k = 0; k < nextSegment.length; k++) {
+                        stepPolyline.getPath().push(nextSegment[k]);
+                        bounds.extend({lat: nextSegment[k].lat(), lng:nextSegment[k].lng()});
+                    }
+                    stepPolyline.setMap(map);
+                }
+            }
+            map.fitBounds(bounds);
+            let id = "id" + Math.random().toString(16).slice(2)
+            let route = {
+                id: id,
+                start_marker: startmarker,
+                end_marker: endmarker,
+                infoWindow: infoWindow,
+                dangerScore: dangerScore,
+                alert_markers: alert_markers,
+                polyline: stepPolyline
+            }
+            routes.push(route)
+
+            google.maps.event.addListener(stepPolyline, 'click', function(evt) {
+                for( let other of routes){
+                    if(other.id!=route.id) unhighlightRoute(other)
+                }
+                highlightRoute(route)
+            })
+            return route
+        }
+
+        function highlightRoute(route){
+            let lineColor;
+            if (route.dangerScore >= 30){
+                lineColor='#df3737'
+            } else if (route.dangerScore >= 20){
+                lineColor='#df9131'
+            } else if (route.dangerScore >= 10){
+                lineColor='#e2d007'
+            } else{
+                lineColor='#a3e66a'
+            }
+            route.polyline.setOptions({strokeColor: lineColor, strokeOpacity: 1});
+            for(let m of route.alert_markers) m[0].map = map;
+            route.start_marker.setMap(map)
+            route.end_marker.setMap(map)
+            route.infoWindow.setMap(map)
+        }
+
+        function unhighlightRoute(route){
+            route.polyline.setOptions({strokeColor: 'grey', strokeOpacity: 0.5})
+            for(let m of route.alert_markers) m[0].map = null;
+            route.start_marker.setMap(null)
+            route.end_marker.setMap(null)
+            route.infoWindow.setMap(null)
+        }
+        
         function highlight(markerView, property) {
             markerView.content.classList.add("highlight");
             markerView.element.style.zIndex = 5;
@@ -205,7 +237,7 @@
             markerView.element.style.zIndex = 3;
         }
 
-        function findMaxOccurence(array) {
+        function findMainCause(array) {
             var modeMap = {};
             var maxEl = array[0], maxCount = 1;
             for(var i = 0; i < array.length; i++){
@@ -225,7 +257,7 @@
         function buildContent(point) {
             let dangerousity
             let counter = {}
-            let cause = findMaxOccurence(point['contributing_factor'].slice(1,-1).split(','))
+            let cause = findMainCause(point['contributing_factor'].slice(1,-1).split(','))
 
             if (point.casualties_count >= 50){
                 dangerousity = 'most-dangerous'
@@ -245,7 +277,7 @@
                     <div class="intersection">${point.intersection == 'undefined'? '': point.intersection}</div>
                     <div class="dangerousity">${point.casualties_count} Wounded/ Killed</div>
                     <div class="cause">Main Cause: ${cause==='Unspecified'?'':cause}</div>
-                    <div class="features">
+                    <div class="features">cause
                 </div>
               `;
             return content;
